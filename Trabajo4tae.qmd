@@ -1,0 +1,10 @@
+---
+title: "<center>The Adaptive Learning Challenge</center>"
+author: "Edwar Jose Londoño Correa <br> Andres Castrillón Velasquez <br> Diego Andres Chavarria Riaño <br> Sebastian Rendon Arteaga <br> Valentina Vanegas Castaño"
+format: html
+editor: visual
+---
+
+## Contexto del problema
+
+kksk
