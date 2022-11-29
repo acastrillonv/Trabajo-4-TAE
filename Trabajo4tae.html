@@ -66,9 +66,95 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<div class="cell">
+
+</div>
 <section id="contexto-del-problema" class="level2">
 <h2 class="anchored" data-anchor-id="contexto-del-problema">Contexto del problema</h2>
-<p>kksk</p>
+<p>El objetivo de esta competencia es crear un modelo de aprendizaje automático capaz de predecir la probabilidad de que un estudiante determinado responda correctamente la siguiente pregunta, dada una secuencia previa de cien resoluciones.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  novo_user_id           city country       device             device_type
+1            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
+2            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
+3            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
+4            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
+5            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
+6            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
+          os platform         region               gp.carrers gp.college.type
+1 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
+2 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
+3 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
+4 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
+5 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
+6 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
+  gp.degree.course gp.previous.experience gp.school.type       gp.segment
+1             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
+2             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
+3             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
+4             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
+5             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
+6             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
+  gp.source_project acertou          created_at row commented_by_professor
+1               ils       0 2022-03-20 10:06:06   1                      0
+2               ils       0 2022-03-20 10:08:25   2                      0
+3               ils       1 2022-03-20 10:09:49   3                      0
+4               ils       0 2022-03-20 10:10:27   4                      0
+5               ils       1 2022-03-20 10:12:12   5                      0
+6               ils       1 2022-03-20 10:14:42   6                      0
+  difficulty discipline_id examining_board_id institute_id knowledge_area_id
+1          4           238                 73         4126                13
+2          4           238                 73         4126                13
+3          3           238                 73         4126                13
+4          4           238                 73         4126                13
+5          3           238                 73         4126                13
+6          3           238                 73         4126                13
+  modality_id nullified outdated product_id publication_year right_answer
+1           1         0        0          1             2022            A
+2           1         0        0          1             2022            C
+3           1         0        0          1             2022            D
+4           1         0        0          1             2022            A
+5           1         0        0          1             2022            E
+6           1         0        0          1             2022            B
+  scholarity_id novo_question_id
+1             2           489400
+2             2           489399
+3             2           489398
+4             2           489397
+5             2           489396
+6             2           489394</code></pre>
+</div>
+</div>
+</section>
+<section id="procesamiento-de-los-datos" class="level2">
+<h2 class="anchored" data-anchor-id="procesamiento-de-los-datos">Procesamiento de los datos</h2>
+<p>Al hacer la carga de los datos, podemos notar que existen columnas que poseen muchos datos NA.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>          novo_user_id                   city                country 
+                     0                      0                      0 
+                device            device_type                     os 
+                     0                      0                      0 
+              platform                 region             gp.carrers 
+                     0                      0                      0 
+       gp.college.type       gp.degree.course gp.previous.experience 
+                666672                 666672                      0 
+        gp.school.type             gp.segment      gp.source_project 
+                666672                      0                      0 
+               acertou             created_at                    row 
+                     0                      0                      0 
+commented_by_professor             difficulty          discipline_id 
+                   178                   2629                    178 
+    examining_board_id           institute_id      knowledge_area_id 
+                   182                    182                    178 
+           modality_id              nullified               outdated 
+                   178                    178                    178 
+            product_id       publication_year           right_answer 
+                   178                    187                      0 
+         scholarity_id       novo_question_id 
+                   178                      0 </code></pre>
+</div>
+</div>
 </section>
 
 </main>

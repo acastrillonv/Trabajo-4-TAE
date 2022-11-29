@@ -5,6 +5,86 @@ format: html
 editor: visual
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,message = F,warning = F)
+```
+
+```{r}
+library(kableExtra)
+```
+
 ## Contexto del problema
 
-kksk
+El objetivo de esta competencia es crear un modelo de aprendizaje automático capaz de predecir la probabilidad de que un estudiante determinado responda correctamente la siguiente pregunta, dada una secuencia previa de cien resoluciones.
+
+```{r}
+# Resouesta de las 100 preguntas por 20,000 usuarios
+
+data1 <- read.csv("Dataset_model-1.csv", encoding = "UTF-8")
+data2 <- read.csv("Dataset_model-2.csv", encoding = "UTF-8")
+data3 <- read.csv("Dataset_model-3.csv", encoding = "UTF-8")
+data4 <- read.csv("Dataset_model-4.csv", encoding = "UTF-8")
+data5 <- read.csv("Dataset_model-5.csv", encoding = "UTF-8")
+data6 <- read.csv("Dataset_model-6.csv", encoding = "UTF-8")
+data7 <- read.csv("Dataset_model-7.csv", encoding = "UTF-8")
+data8 <- read.csv("Dataset_model-8.csv", encoding = "UTF-8")
+data9 <- read.csv("Dataset_model-9.csv", encoding = "UTF-8")
+datos <- rbind(data1,data2,data3,data4,data5,data6,data7,data8,data9)
+head(datos)
+```
+
+## Procesamiento de los datos
+
+Al hacer la carga de los datos, podemos notar que existen columnas que poseen muchos datos NA.
+
+```{r}
+apply(is.na(datos),2,sum)
+```
+
+```{r}
+
+novo_user_id <- c()
+city <- c()
+country <- c()
+device <- c()
+device_type <- c()
+os <- c()
+platform <- c()
+region <- c()
+carrers <- c()
+
+college_type <- c()
+degree_course <- c()
+previous_experience <- c()
+school_type <- c()
+segment <- c()
+source_project <- c()
+
+acertou <- c()
+commented_by_professor <- c()
+difficulty <- c()
+modality_mc <- c()
+modality_wr <- c()
+
+user <- 1
+for(i in 1:20){
+
+  novo_user_id <- c(novo_user_id,datos[user,1])
+  city <- c(city,datos[user,2])
+  country <- c(country,datos[user,3])
+  device <- c(device,datos[user,4])
+  device_type <- c(device_type,datos[user,5])
+  os <- c(os,datos[user,6])
+  platform <- c(platform,datos[user,7])
+  region <- c(region,datos[user,8])
+  carrers <- c(carrers,datos[user,9])
+  
+  carrers <- c(carrers,datos[user,9])
+  carrers <- c(carrers,datos[user,9])
+  carrers <- c(carrers,datos[user,9])
+  carrers <- c(carrers,datos[user,9])
+  carrers <- c(carrers,datos[user,9])
+  carrers <- c(carrers,datos[user,9])
+  
+}
+```
