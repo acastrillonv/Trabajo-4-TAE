@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = FALSE,message = F,warning = F)
 
 ```{r}
 library(kableExtra)
+library(dplyr)
 ```
 
 ## Contexto del problema
@@ -36,78 +37,48 @@ respuestas <- read.csv("Submit.csv", encoding = "UTF-8", sep = ";")
 head(datos)
 ```
 
-## Procesamiento de los datos
+## 2- Procesamiento de los datos
 
-Al hacer la carga de los datos, podemos notar que existen columnas que poseen muchos datos NA.
+### 2.1- Selección de variables
+
+Como primer paso, se verifica la cantidad de valores NA por columna, esto se puede observar en la Tabla 1.
 
 ```{r}
-apply(is.na(datos),2,sum)
+#Cantidad de registros nulos
+
+kable(apply(is.na(datos),2,sum),caption = "Valores NA") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
 ```
 
+<center>**Tabla 1.** Cantidad de valores NA por variable de la base datos</center>
+
+<br>
+
+Para la selección de las variables, se tomo en cuenta lo siguiente:
+
+-   Se decide eliminar las variables "gp.college.type", "gp.degree.course", y "gp.school.type", ya que consideramos suficiente la información obtenida de la variable "gp.carrers".
+
+-   Se decide eliminar las variables "city" y "region", ya que consideramos suficiente la información obtenida por país.
+
+-   Se eliminan las variables "device", "device_type", "os", y "platform", ya que no se considera relevante la información del dispostivio en el que el usuario presenta el examen.
+
+-   Las variables "gp:segment" , "commented_by_teacher" y "gp:source_project" son eliminadas ya que no se consideran relevantes para el estudio.
+
+-   La variable "created_at" se elimina ya que no se considera relevante la fecha en que presento la pregunta, y "publication_year" también se elimina ya que no se considera importante el año en que se publicó la pregunta.
+
+-   Las variables "row", "discipline_id", "examining_board_id", "institute_id", "novo_question_id", "knowledge_area_id", "product_id" y "novo_user_id" se eliminan ya que son variables de identificación.
+
 ```{r}
-
-novo_user_id <- c()
-city <- c()
-country <- c()
-device <- c()
-device_type <- c()
-os <- c()
-platform <- c()
-region <- c()
-carrers <- c()
-college_type <- c()
-degree_course <- c()
-previous_experience <- c()
-school_type <- c()
-segment <- c()
-source_project <- c()
-
-#acertou <- c()
-#commented_by_professor <- c()
-#difficulty <- c()
-#modality_mc <- c()
-#modality_wr <- c()
-#user <- 1
-
-for(i in 1:20000){
-
-  novo_user_id <- c(novo_user_id,datos[user,1])
-  city <- c(city,datos[user,2])
-  country <- c(country,datos[user,3])
-  device <- c(device,datos[user,4])
-  device_type <- c(device_type,datos[user,5])
-  os <- c(os,datos[user,6])
-  platform <- c(platform,datos[user,7])
-  region <- c(region,datos[user,8])
-  carrers <- c(carrers,datos[user,9])
-  college_type <- c(college_type,datos[user,10])
-  degree_course <- c(degree_course,datos[user,11])
-  previous_experience <- c(previous_experience,datos[user,12])
-  school_type <- c(school_type,datos[user,13])
-  segment <- c(segment,datos[user,14])
-  source_project <- c(source_project,datos[user,15])
-  user <- user+100
-}
-
-usuarios <- data.frame(novo_user_id,
-                       city,
-                       country,
-                       device,
-                       device_type,
-                       os,
-                       platform,
-                       region,
-                       carrers,
-                       college_type,
-                       degree_course,
-                       previous_experience,
-                       school_type,
-                       segment,
-                       source_project)
-
-
+datos_modelo <- subset(datos, select = c(country,gp.carrers, gp.previous.experience, acertou,difficulty,modality_id,right_answer, scholarity_id, nullified, outdated))
 ```
 
+### 2.2-  Análisis de las variables seleccionadas 
+
 ```{r}
-apply(is.na(usuarios),2,sum)
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(country) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Año") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
 ```

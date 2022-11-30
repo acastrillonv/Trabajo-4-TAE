@@ -35,6 +35,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="Trabajo4tae_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Trabajo4tae_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+<script src="Trabajo4tae_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="Trabajo4tae_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 
 </head>
 
@@ -127,49 +130,232 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </section>
 <section id="procesamiento-de-los-datos" class="level2">
-<h2 class="anchored" data-anchor-id="procesamiento-de-los-datos">Procesamiento de los datos</h2>
-<p>Al hacer la carga de los datos, podemos notar que existen columnas que poseen muchos datos NA.</p>
+<h2 class="anchored" data-anchor-id="procesamiento-de-los-datos">2- Procesamiento de los datos</h2>
+<section id="selección-de-variables" class="level3">
+<h3 class="anchored" data-anchor-id="selección-de-variables">2.1- Selección de variables</h3>
+<p>Como primer paso, se verifica la cantidad de valores NA por columna, esto se puede observar en la Tabla 1.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>          novo_user_id                   city                country 
-                     0                      0                      0 
-                device            device_type                     os 
-                     0                      0                      0 
-              platform                 region             gp.carrers 
-                     0                      0                      0 
-       gp.college.type       gp.degree.course gp.previous.experience 
-                666672                 666672                      0 
-        gp.school.type             gp.segment      gp.source_project 
-                666672                      0                      0 
-               acertou             created_at                    row 
-                     0                      0                      0 
-commented_by_professor             difficulty          discipline_id 
-                   178                   2629                    178 
-    examining_board_id           institute_id      knowledge_area_id 
-                   182                    182                    178 
-           modality_id              nullified               outdated 
-                   178                    178                    178 
-            product_id       publication_year           right_answer 
-                   178                    187                      0 
-         scholarity_id       novo_question_id 
-                   178                      0 </code></pre>
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores NA</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> x </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> novo_user_id </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> city </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> country </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> device </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> device_type </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> os </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> platform </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> region </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gp.carrers </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gp.college.type </td>
+   <td style="text-align:right;"> 666672 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gp.degree.course </td>
+   <td style="text-align:right;"> 666672 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gp.previous.experience </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gp.school.type </td>
+   <td style="text-align:right;"> 666672 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gp.segment </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gp.source_project </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> acertou </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> created_at </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> row </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> commented_by_professor </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> difficulty </td>
+   <td style="text-align:right;"> 2629 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> discipline_id </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> examining_board_id </td>
+   <td style="text-align:right;"> 182 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> institute_id </td>
+   <td style="text-align:right;"> 182 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> knowledge_area_id </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> modality_id </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nullified </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> outdated </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> product_id </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> publication_year </td>
+   <td style="text-align:right;"> 187 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> right_answer </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> scholarity_id </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> novo_question_id </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
 </div>
+<center>
+<strong>Tabla 1.</strong> Cantidad de valores NA por variable de la base datos
+</center>
+<p><br></p>
+<p>Para la selección de las variables, se tomo en cuenta lo siguiente:</p>
+<ul>
+<li><p>Se decide eliminar las variables “gp.college.type”, “gp.degree.course”, y “gp.school.type”, ya que consideramos suficiente la información obtenida de la variable “gp.carrers”.</p></li>
+<li><p>Se decide eliminar las variables “city” y “region”, ya que consideramos suficiente la información obtenida por país.</p></li>
+<li><p>Se eliminan las variables “device”, “device_type”, “os”, y “platform”, ya que no se considera relevante la información del dispostivio en el que el usuario presenta el examen.</p></li>
+<li><p>Las variables “gp:segment” , “commented_by_teacher” y “gp:source_project” son eliminadas ya que no se consideran relevantes para el estudio.</p></li>
+<li><p>La variable “created_at” se elimina ya que no se considera relevante la fecha en que presento la pregunta, y “publication_year” también se elimina ya que no se considera importante el año en que se publicó la pregunta.</p></li>
+<li><p>Las variables “row”, “discipline_id”, “examining_board_id”, “institute_id”, “novo_question_id”, “knowledge_area_id”, “product_id” y “novo_user_id” se eliminan ya que son variables de identificación.</p></li>
+</ul>
 <div class="cell">
 
 </div>
+</section>
+<section id="análisis-de-las-variables-seleccionadas" class="level3">
+<h3 class="anchored" data-anchor-id="análisis-de-las-variables-seleccionadas">2.2- Análisis de las variables seleccionadas</h3>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>       novo_user_id                city             country              device 
-                  0                   0                   0                   0 
-        device_type                  os            platform              region 
-                  0                   0                   0                   0 
-            carrers        college_type       degree_course previous_experience 
-                  0                6667                6667                   0 
-        school_type             segment      source_project 
-               6667                   0                   0 </code></pre>
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Año</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> country </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Brazil </td>
+   <td style="text-align:right;"> 1983600 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> 13200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> United States </td>
+   <td style="text-align:right;"> 800 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Portugal </td>
+   <td style="text-align:right;"> 300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Switzerland </td>
+   <td style="text-align:right;"> 300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Argentina </td>
+   <td style="text-align:right;"> 200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Australia </td>
+   <td style="text-align:right;"> 200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Netherlands </td>
+   <td style="text-align:right;"> 200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Spain </td>
+   <td style="text-align:right;"> 200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Angola </td>
+   <td style="text-align:right;"> 100 </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
 </div>
+</section>
 </section>
 
 </main>
