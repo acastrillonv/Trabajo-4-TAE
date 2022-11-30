@@ -34,7 +34,7 @@ datos <- rbind(data1,data2,data3,data4,data5,data6,data7,data8,data9)
 
 #respuestas enviadas por cada usuario
 respuestas <- read.csv("Submit.csv", encoding = "UTF-8", sep = ";")
-head(datos)
+#head(datos)
 ```
 
 ## 2- Procesamiento de los datos
@@ -75,9 +75,29 @@ datos_modelo <- subset(datos, select = c(country,gp.carrers, gp.previous.experie
 
 ```{r}
 datos_modelo <- datos_modelo %>% mutate(country = ifelse(country ==  "" , NA, country))
+
+
+datos_modelo <- datos_modelo %>% mutate(gp.carrers = ifelse(gp.carrers ==  "" , NA, gp.carrers))
+
+
+datos_modelo <- datos_modelo %>% mutate(gp.previous.experience = ifelse(gp.previous.experience ==  "" , NA, gp.previous.experience))
+
+datos_modelo <- datos_modelo %>% mutate(acertou = ifelse(acertou ==  "" , NA, acertou))
+
+datos_modelo <- datos_modelo %>% mutate(difficulty = ifelse(difficulty ==  "" , NA, difficulty))
+
+datos_modelo <- datos_modelo %>% mutate(modality_id = ifelse(modality_id ==  "" , NA, modality_id))
+
+datos_modelo <- datos_modelo %>% mutate(right_answer = ifelse(right_answer ==  "" , NA, right_answer))
+
+datos_modelo <- datos_modelo %>% mutate(scholarity_id = ifelse(scholarity_id ==  "" , NA, scholarity_id))
+
+datos_modelo <- datos_modelo %>% mutate(nullified = ifelse(nullified ==  "" , NA, nullified))
+
+datos_modelo <- datos_modelo %>% mutate(outdated = ifelse(outdated ==  "" , NA, outdated))
 ```
 
-### 2.2-  Análisis de las variables seleccionadas 
+### 2.2- Análisis de las variables seleccionadas
 
 Primero analizaremos la variable "country". Identificando en la Tabla 2 los valores únicos de esta variable, podemos observar que existen registros con valor vacio, estos serán cambiados por el valor otro
 
@@ -92,11 +112,3 @@ kable(head(datos_modelo %>% group_by(country) %>% summarise(n = n()) %>% arrange
 <center>**Tabla 2.** Valores únicos de la variable "country"</center>
 
 <br>
-
-```{r}
-datos_modelo[datos_modelo$country!="Brazil" & datos_modelo$country!="United States" & datos_modelo$country!="Portugal" & datos_modelo$country!="Switzerland" & datos_modelo$country!="Argentina" & datos_modelo$country!="Australia" & datos_modelo$country!="Netherlands" & datos_modelo$country!="Spain" & datos_modelo$country!="Angola",]
-```
-
-```{r}
-datos_modelo[datos_modelo$country=="",]
-```
