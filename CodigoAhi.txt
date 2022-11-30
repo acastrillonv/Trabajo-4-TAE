@@ -1,0 +1,58 @@
+novo_user_id <- c()
+city <- c()
+country <- c()
+device <- c()
+device_type <- c()
+os <- c()
+platform <- c()
+region <- c()
+carrers <- c()
+college_type <- c()
+degree_course <- c()
+previous_experience <- c()
+school_type <- c()
+segment <- c()
+source_project <- c()
+
+#acertou <- c()
+#commented_by_professor <- c()
+#difficulty <- c()
+#modality_mc <- c()
+#modality_wr <- c()
+#user <- 1
+
+for(i in 1:20000){
+
+  novo_user_id <- c(novo_user_id,datos[user,1])
+  city <- c(city,datos[user,2])
+  country <- c(country,datos[user,3])
+  device <- c(device,datos[user,4])
+  device_type <- c(device_type,datos[user,5])
+  os <- c(os,datos[user,6])
+  platform <- c(platform,datos[user,7])
+  region <- c(region,datos[user,8])
+  carrers <- c(carrers,datos[user,9])
+  college_type <- c(college_type,datos[user,10])
+  degree_course <- c(degree_course,datos[user,11])
+  previous_experience <- c(previous_experience,datos[user,12])
+  school_type <- c(school_type,datos[user,13])
+  segment <- c(segment,datos[user,14])
+  source_project <- c(source_project,datos[user,15])
+  user <- user+100
+}
+
+usuarios <- data.frame(novo_user_id,
+                       city,
+                       country,
+                       device,
+                       device_type,
+                       os,
+                       platform,
+                       region,
+                       carrers,
+                       college_type,
+                       degree_course,
+                       previous_experience,
+                       school_type,
+                       segment,
+                       source_project)
