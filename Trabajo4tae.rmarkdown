@@ -1,0 +1,143 @@
+---
+title: "<center>The Adaptive Learning Challenge</center>"
+author: "Edwar Jose Londoño Correa <br> Andres Castrillón Velasquez <br> Diego Andres Chavarria Riaño <br> Sebastian Rendon Arteaga <br> Valentina Vanegas Castaño"
+format: html
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,message = F,warning = F)
+```
+
+```{r}
+library(kableExtra)
+library(dplyr)
+```
+
+
+## Contexto del problema
+
+El objetivo de esta competencia es crear un modelo de aprendizaje automático capaz de predecir la probabilidad de que un estudiante determinado responda correctamente la siguiente pregunta, dada una secuencia previa de cien resoluciones.
+
+
+```{r}
+# Resouesta de las 100 preguntas por 20,000 usuarios
+
+data1 <- read.csv("Dataset_model-1.csv", encoding = "UTF-8")
+data2 <- read.csv("Dataset_model-2.csv", encoding = "UTF-8")
+data3 <- read.csv("Dataset_model-3.csv", encoding = "UTF-8")
+data4 <- read.csv("Dataset_model-4.csv", encoding = "UTF-8")
+data5 <- read.csv("Dataset_model-5.csv", encoding = "UTF-8")
+data6 <- read.csv("Dataset_model-6.csv", encoding = "UTF-8")
+data7 <- read.csv("Dataset_model-7.csv", encoding = "UTF-8")
+data8 <- read.csv("Dataset_model-8.csv", encoding = "UTF-8")
+data9 <- read.csv("Dataset_model-9.csv", encoding = "UTF-8")
+datos <- rbind(data1,data2,data3,data4,data5,data6,data7,data8,data9)
+
+#respuestas enviadas por cada usuario
+respuestas <- read.csv("Submit.csv", encoding = "UTF-8", sep = ";")
+#head(datos)
+```
+
+
+## 2- Procesamiento de los datos
+
+### 2.1- Selección de variables
+
+Para la selección de las variables, se tomo en cuenta lo siguiente:
+
+-   Se decide eliminar las variables "gp.college.type", "gp.degree.course", y "gp.school.type", ya que consideramos suficiente la información obtenida de la variable "gp.carrers".
+
+-   Se decide eliminar las variables "city" y "region", ya que consideramos suficiente la información obtenida por país.
+
+-   Se eliminan las variables "device", "device_type", "os", y "platform", ya que no se considera relevante la información del dispostivio en el que el usuario presenta el examen.
+
+-   Las variables "gp:segment" , "commented_by_teacher" y "gp:source_project" son eliminadas ya que no se consideran relevantes para el estudio.
+
+-   La variable "created_at" se elimina ya que no se considera relevante la fecha en que presento la pregunta, y "publication_year" también se elimina ya que no se considera importante el año en que se publicó la pregunta.
+
+-   Las variables "row", "discipline_id", "examining_board_id", "institute_id", "novo_question_id", "knowledge_area_id", "product_id" y "novo_user_id" se eliminan ya que son variables de identificación.
+
+
+```{r}
+datos_modelo <- subset(datos, select = c(country,gp.carrers, gp.previous.experience, acertou,difficulty,modality_id,right_answer, scholarity_id, nullified, outdated))
+```
+
+```{r}
+datos_modelo <- datos_modelo %>% mutate(country = ifelse(country ==  "" , NA, country))
+
+
+datos_modelo <- datos_modelo %>% mutate(gp.carrers = ifelse(gp.carrers ==  "" , NA, gp.carrers))
+
+
+datos_modelo <- datos_modelo %>% mutate(gp.previous.experience = ifelse(gp.previous.experience ==  "" , NA, gp.previous.experience))
+
+datos_modelo <- datos_modelo %>% mutate(acertou = ifelse(acertou ==  "" , NA, acertou))
+
+datos_modelo <- datos_modelo %>% mutate(difficulty = ifelse(difficulty ==  "" , NA, difficulty))
+
+datos_modelo <- datos_modelo %>% mutate(modality_id = ifelse(modality_id ==  "" , NA, modality_id))
+
+datos_modelo <- datos_modelo %>% mutate(right_answer = ifelse(right_answer ==  "" , NA, right_answer))
+
+datos_modelo <- datos_modelo %>% mutate(scholarity_id = ifelse(scholarity_id ==  "" , NA, scholarity_id))
+
+datos_modelo <- datos_modelo %>% mutate(nullified = ifelse(nullified ==  "" , NA, nullified))
+
+datos_modelo <- datos_modelo %>% mutate(outdated = ifelse(outdated ==  "" , NA, outdated))
+```
+
+
+### 2.2- Análisis de las variables seleccionadas
+
+#### Variable "country"
+
+En la Tabla 1 podemos observar los valores únicos de esta variable.
+
+
+```{r}
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(country) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Country") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+
+<center>**Tabla 1.** Valores únicos de la variable "country"</center>
+
+<br>
+
+#### Variable "gp.carrers"
+
+En la Tabla 2 podemos observar los valores únicos de esta variable.
+
+
+```{r}
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(country) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+
+<center>**Tabla 2.** Valores únicos de la variable "gp.carrers"</center>
+
+<br>
+
+
+```{r}
+
+#Cantidad de registros nulos
+
+kable(apply(is.na(datos),2,sum),caption = "Valores NA") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+
+<center>**Tabla 1.** Cantidad de valores NA por variable de la base datos</center>
+
+<br>
+

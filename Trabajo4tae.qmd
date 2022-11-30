@@ -41,20 +41,6 @@ respuestas <- read.csv("Submit.csv", encoding = "UTF-8", sep = ";")
 
 ### 2.1- Selección de variables
 
-Como primer paso, se verifica la cantidad de valores NA por columna, esto se puede observar en la Tabla 1.
-
-```{r}
-#Cantidad de registros nulos
-
-kable(apply(is.na(datos),2,sum),caption = "Valores NA") %>% 
-  kable_styling(full_width = F,position = "center") %>% 
-  kable_minimal()
-```
-
-<center>**Tabla 1.** Cantidad de valores NA por variable de la base datos</center>
-
-<br>
-
 Para la selección de las variables, se tomo en cuenta lo siguiente:
 
 -   Se decide eliminar las variables "gp.college.type", "gp.degree.course", y "gp.school.type", ya que consideramos suficiente la información obtenida de la variable "gp.carrers".
@@ -99,7 +85,9 @@ datos_modelo <- datos_modelo %>% mutate(outdated = ifelse(outdated ==  "" , NA, 
 
 ### 2.2- Análisis de las variables seleccionadas
 
-Primero analizaremos la variable "country". Identificando en la Tabla 2 los valores únicos de esta variable, podemos observar que existen registros con valor vacio, estos serán cambiados por el valor otro
+#### Variable "country"
+
+En la Tabla 1 podemos observar los valores únicos de esta variable.
 
 ```{r}
 #Frecuencia de la variable ano
@@ -109,6 +97,35 @@ kable(head(datos_modelo %>% group_by(country) %>% summarise(n = n()) %>% arrange
   kable_minimal()
 ```
 
-<center>**Tabla 2.** Valores únicos de la variable "country"</center>
+<center>**Tabla 1.** Valores únicos de la variable "country"</center>
+
+<br>
+
+#### Variable "gp.carrers"
+
+En la Tabla 2 podemos observar los valores únicos de esta variable.
+
+```{r}
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(gp.carrers) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 2.** Valores únicos de la variable "gp.carrers"</center>
+
+<br>
+
+```{r}
+
+#Cantidad de registros nulos
+
+kable(apply(is.na(datos),2,sum),caption = "Valores NA") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 1.** Cantidad de valores NA por variable de la base datos</center>
 
 <br>
