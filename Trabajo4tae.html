@@ -76,213 +76,13 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="contexto-del-problema">Contexto del problema</h2>
 <p>El objetivo de esta competencia es crear un modelo de aprendizaje automático capaz de predecir la probabilidad de que un estudiante determinado responda correctamente la siguiente pregunta, dada una secuencia previa de cien resoluciones.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>  novo_user_id           city country       device             device_type
-1            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
-2            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
-3            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
-4            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
-5            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
-6            1 Rio de Janeiro  Brazil Apple iPhone Apple iPhone 11 Pro Max
-          os platform         region               gp.carrers gp.college.type
-1 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
-2 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
-3 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
-4 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
-5 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
-6 ios 15.4.1      iOS Rio de Janeiro Tribunal, Administrativa            &lt;NA&gt;
-  gp.degree.course gp.previous.experience gp.school.type       gp.segment
-1             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
-2             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
-3             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
-4             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
-5             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
-6             &lt;NA&gt;               beginner           &lt;NA&gt; Concurso Público
-  gp.source_project acertou          created_at row commented_by_professor
-1               ils       0 2022-03-20 10:06:06   1                      0
-2               ils       0 2022-03-20 10:08:25   2                      0
-3               ils       1 2022-03-20 10:09:49   3                      0
-4               ils       0 2022-03-20 10:10:27   4                      0
-5               ils       1 2022-03-20 10:12:12   5                      0
-6               ils       1 2022-03-20 10:14:42   6                      0
-  difficulty discipline_id examining_board_id institute_id knowledge_area_id
-1          4           238                 73         4126                13
-2          4           238                 73         4126                13
-3          3           238                 73         4126                13
-4          4           238                 73         4126                13
-5          3           238                 73         4126                13
-6          3           238                 73         4126                13
-  modality_id nullified outdated product_id publication_year right_answer
-1           1         0        0          1             2022            A
-2           1         0        0          1             2022            C
-3           1         0        0          1             2022            D
-4           1         0        0          1             2022            A
-5           1         0        0          1             2022            E
-6           1         0        0          1             2022            B
-  scholarity_id novo_question_id
-1             2           489400
-2             2           489399
-3             2           489398
-4             2           489397
-5             2           489396
-6             2           489394</code></pre>
-</div>
+
 </div>
 </section>
 <section id="procesamiento-de-los-datos" class="level2">
 <h2 class="anchored" data-anchor-id="procesamiento-de-los-datos">2- Procesamiento de los datos</h2>
 <section id="selección-de-variables" class="level3">
 <h3 class="anchored" data-anchor-id="selección-de-variables">2.1- Selección de variables</h3>
-<p>Como primer paso, se verifica la cantidad de valores NA por columna, esto se puede observar en la Tabla 1.</p>
-<div class="cell">
-<div class="cell-output-display">
-
-<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores NA</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:right;"> x </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> novo_user_id </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> city </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> country </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> device </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> device_type </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> os </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> platform </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> region </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> gp.carrers </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> gp.college.type </td>
-   <td style="text-align:right;"> 666672 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> gp.degree.course </td>
-   <td style="text-align:right;"> 666672 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> gp.previous.experience </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> gp.school.type </td>
-   <td style="text-align:right;"> 666672 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> gp.segment </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> gp.source_project </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> acertou </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> created_at </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> row </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> commented_by_professor </td>
-   <td style="text-align:right;"> 178 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> difficulty </td>
-   <td style="text-align:right;"> 2629 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> discipline_id </td>
-   <td style="text-align:right;"> 178 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> examining_board_id </td>
-   <td style="text-align:right;"> 182 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> institute_id </td>
-   <td style="text-align:right;"> 182 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> knowledge_area_id </td>
-   <td style="text-align:right;"> 178 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> modality_id </td>
-   <td style="text-align:right;"> 178 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> nullified </td>
-   <td style="text-align:right;"> 178 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> outdated </td>
-   <td style="text-align:right;"> 178 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> product_id </td>
-   <td style="text-align:right;"> 178 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> publication_year </td>
-   <td style="text-align:right;"> 187 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> right_answer </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> scholarity_id </td>
-   <td style="text-align:right;"> 178 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> novo_question_id </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-</tbody>
-</table>
-
-</div>
-</div>
-<center>
-<strong>Tabla 1.</strong> Cantidad de valores NA por variable de la base datos
-</center>
-<p><br></p>
 <p>Para la selección de las variables, se tomo en cuenta lo siguiente:</p>
 <ul>
 <li><p>Se decide eliminar las variables “gp.college.type”, “gp.degree.course”, y “gp.school.type”, ya que consideramos suficiente la información obtenida de la variable “gp.carrers”.</p></li>
@@ -301,7 +101,9 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="análisis-de-las-variables-seleccionadas" class="level3">
 <h3 class="anchored" data-anchor-id="análisis-de-las-variables-seleccionadas">2.2- Análisis de las variables seleccionadas</h3>
-<p>Primero analizaremos la variable “country”. Identificando en la Tabla 2 los valores únicos de esta variable, podemos observar que existen registros con valor vacio, estos serán cambiados por el valor otro</p>
+<section id="variable-country" class="level4">
+<h4 class="anchored" data-anchor-id="variable-country">Variable “country”</h4>
+<p>En la Tabla 1 podemos observar los valores únicos de esta variable.</p>
 <div class="cell">
 <div class="cell-output-display">
 
@@ -360,9 +162,476 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 2.</strong> Valores únicos de la variable “country”
+<strong>Tabla 1.</strong> Valores únicos de la variable “country”
 </center>
 <p><br></p>
+</section>
+<section id="variable-gp.carrers" class="level4">
+<h4 class="anchored" data-anchor-id="variable-gp.carrers">Variable “gp.carrers”</h4>
+<p>En la Tabla 2 podemos observar los valores únicos de esta variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Carrers</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> gp.carrers </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Policial </td>
+   <td style="text-align:right;"> 486700 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Jurídica </td>
+   <td style="text-align:right;"> 165500 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Outras </td>
+   <td style="text-align:right;"> 135700 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tribunal </td>
+   <td style="text-align:right;"> 121500 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 116900 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Administrativa </td>
+   <td style="text-align:right;"> 84200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Saúde </td>
+   <td style="text-align:right;"> 67800 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Educação </td>
+   <td style="text-align:right;"> 60100 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tribunal, Jurídica </td>
+   <td style="text-align:right;"> 54700 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Fiscal </td>
+   <td style="text-align:right;"> 45000 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 2.</strong> Valores únicos de la variable “gp.carrers”
+</center>
+<p><br></p>
+</section>
+<section id="variable-gp.previous.experience" class="level4">
+<h4 class="anchored" data-anchor-id="variable-gp.previous.experience">Variable “gp.previous.experience”</h4>
+<p>En la Tabla 3 podemos observar los valores únicos de esta variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Carrers</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> gp.previous.experience </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1052200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beginner </td>
+   <td style="text-align:right;"> 546200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> experient </td>
+   <td style="text-align:right;"> 270900 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> professional </td>
+   <td style="text-align:right;"> 93200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> highly_experient </td>
+   <td style="text-align:right;"> 37500 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 3.</strong> Valores únicos de la variable “gp.previous.experience”
+</center>
+<p><br></p>
+</section>
+<section id="variable-difficulty" class="level4">
+<h4 class="anchored" data-anchor-id="variable-difficulty">Variable “difficulty”</h4>
+<p>En la Tabla 4 podemos observar los valores únicos de esta variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Carrers</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> difficulty </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 804260 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 640501 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 465835 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 85528 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 2629 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1247 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 4.</strong> Valores únicos de la variable “difficulty”
+</center>
+<p><br></p>
+</section>
+<section id="variable-modality_id" class="level4">
+<h4 class="anchored" data-anchor-id="variable-modality_id">Variable “modality_id”</h4>
+<p>En la Tabla 5 podemos observar los valores únicos de esta variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Carrers</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> modality_id </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1505832 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 493990 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 5.</strong> Valores únicos de la variable “modality_id”
+</center>
+<p><br></p>
+</section>
+<section id="variable-right_answer" class="level4">
+<h4 class="anchored" data-anchor-id="variable-right_answer">Variable “right_answer”</h4>
+<p>En la Tabla 6 podemos observar los valores únicos de esta variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Carrers</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> right_answer </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:right;"> 571076 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> E </td>
+   <td style="text-align:right;"> 471281 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> D </td>
+   <td style="text-align:right;"> 321375 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B </td>
+   <td style="text-align:right;"> 318455 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:right;"> 317595 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> X </td>
+   <td style="text-align:right;"> 38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> * </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> + </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 6.</strong> Valores únicos de la variable “right_answer”
+</center>
+<p><br></p>
+</section>
+<section id="variable-scholarity_id" class="level4">
+<h4 class="anchored" data-anchor-id="variable-scholarity_id">Variable “scholarity_id”</h4>
+<p>En la Tabla 7 podemos observar los valores únicos de esta variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Carrers</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> scholarity_id </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1316353 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 640697 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 42772 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 7.</strong> Valores únicos de la variable “scholarity_id”
+</center>
+<p><br></p>
+</section>
+<section id="variable-nullified" class="level4">
+<h4 class="anchored" data-anchor-id="variable-nullified">Variable “nullified”</h4>
+<p>En la Tabla 8 podemos observar los valores únicos de esta variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Carrers</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> nullified </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1994668 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 5154 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 8.</strong> Valores únicos de la variable “nullified”
+</center>
+<p><br></p>
+</section>
+<section id="variable-outdated" class="level4">
+<h4 class="anchored" data-anchor-id="variable-outdated">Variable “outdated”</h4>
+<p>En la Tabla 9 podemos observar los valores únicos de esta variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Carrers</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> outdated </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1964150 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 35672 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 9.</strong> Valores únicos de la variable “outdated”
+</center>
+<p><br></p>
+</section>
+<section id="variable-acertou" class="level4">
+<h4 class="anchored" data-anchor-id="variable-acertou">Variable “acertou”</h4>
+<p>En la Tabla 10 podemos observar los valores únicos de esta variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Carrers</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> acertou </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1308561 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 691439 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 10.</strong> Valores únicos de la variable “acertou”
+</center>
+<p><br></p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores NA</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> x </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> country </td>
+   <td style="text-align:right;"> 13200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gp.carrers </td>
+   <td style="text-align:right;"> 116900 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gp.previous.experience </td>
+   <td style="text-align:right;"> 1052200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> acertou </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> difficulty </td>
+   <td style="text-align:right;"> 2629 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> modality_id </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> right_answer </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> scholarity_id </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nullified </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> outdated </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 11.</strong> Cantidad de valores NA por variable de la base datos
+</center>
+<p><br></p>
+</section>
 </section>
 </section>
 

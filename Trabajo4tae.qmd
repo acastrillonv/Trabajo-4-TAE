@@ -117,15 +117,143 @@ kable(head(datos_modelo %>% group_by(gp.carrers) %>% summarise(n = n()) %>% arra
 
 <br>
 
+#### Variable "gp.previous.experience"
+
+En la Tabla 3 podemos observar los valores únicos de esta variable.
+
 ```{r}
+#Frecuencia de la variable ano
 
-#Cantidad de registros nulos
-
-kable(apply(is.na(datos),2,sum),caption = "Valores NA") %>% 
+kable(head(datos_modelo %>% group_by(gp.previous.experience) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
 ```
 
-<center>**Tabla 1.** Cantidad de valores NA por variable de la base datos</center>
+<center>**Tabla 3.** Valores únicos de la variable "gp.previous.experience"</center>
+
+<br>
+
+#### Variable "difficulty"
+
+En la Tabla 4 podemos observar los valores únicos de esta variable.
+
+```{r}
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(difficulty) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 4.** Valores únicos de la variable "difficulty"</center>
+
+<br>
+
+#### Variable "modality_id"
+
+En la Tabla 5 podemos observar los valores únicos de esta variable.
+
+```{r}
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(modality_id) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 5.** Valores únicos de la variable "modality_id"</center>
+
+<br>
+
+#### Variable "right_answer"
+
+En la Tabla 6 podemos observar los valores únicos de esta variable.
+
+```{r}
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(right_answer) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 6.** Valores únicos de la variable "right_answer"</center>
+
+<br>
+
+#### Variable "scholarity_id"
+
+En la Tabla 7 podemos observar los valores únicos de esta variable.
+
+```{r}
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(scholarity_id) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 7.** Valores únicos de la variable "scholarity_id"</center>
+
+<br>
+
+#### Variable "nullified"
+
+En la Tabla 8 podemos observar los valores únicos de esta variable.
+
+```{r}
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(nullified) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 8.** Valores únicos de la variable "nullified"</center>
+
+<br>
+
+#### Variable "outdated"
+
+En la Tabla 9 podemos observar los valores únicos de esta variable.
+
+```{r}
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(outdated) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 9.** Valores únicos de la variable "outdated"</center>
+
+<br>
+
+#### Variable "acertou"
+
+En la Tabla 10 podemos observar los valores únicos de esta variable.
+
+```{r}
+#Frecuencia de la variable ano
+
+kable(head(datos_modelo %>% group_by(acertou) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 10.** Valores únicos de la variable "acertou"</center>
+
+<br>
+
+```{r}
+
+#Cantidad de registros nulos
+
+kable(apply(is.na(datos_modelo),2,sum),caption = "Valores NA") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 11.** Cantidad de valores NA por variable de la base datos</center>
 
 <br>
