@@ -73,12 +73,30 @@ Para la selección de las variables, se tomo en cuenta lo siguiente:
 datos_modelo <- subset(datos, select = c(country,gp.carrers, gp.previous.experience, acertou,difficulty,modality_id,right_answer, scholarity_id, nullified, outdated))
 ```
 
+```{r}
+datos_modelo <- datos_modelo %>% mutate(country = ifelse(country ==  "" , NA, country))
+```
+
 ### 2.2-  Análisis de las variables seleccionadas 
+
+Primero analizaremos la variable "country". Identificando en la Tabla 2 los valores únicos de esta variable, podemos observar que existen registros con valor vacio, estos serán cambiados por el valor otro
 
 ```{r}
 #Frecuencia de la variable ano
 
-kable(head(datos_modelo %>% group_by(country) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Año") %>% 
+kable(head(datos_modelo %>% group_by(country) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Country") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
+```
+
+<center>**Tabla 2.** Valores únicos de la variable "country"</center>
+
+<br>
+
+```{r}
+datos_modelo[datos_modelo$country!="Brazil" & datos_modelo$country!="United States" & datos_modelo$country!="Portugal" & datos_modelo$country!="Switzerland" & datos_modelo$country!="Argentina" & datos_modelo$country!="Australia" & datos_modelo$country!="Netherlands" & datos_modelo$country!="Spain" & datos_modelo$country!="Angola",]
+```
+
+```{r}
+datos_modelo[datos_modelo$country=="",]
 ```
