@@ -14,6 +14,8 @@ library(kableExtra)
 library(dplyr)
 library(tidyverse)
 library(stringr)
+library(caret)
+library(pander)
 ```
 
 ## 1- Contexto del problema
@@ -372,41 +374,6 @@ kable(datos_modelo %>% group_by(outdated) %>% summarise(n = n()) %>% arrange(-n)
 
 <br>
 
-#### Variable "acertou"
-
-En la Tabla 17 podemos observar los valores únicos de esta variable, los cuales son "0" y "1". Esta variable indica si el usuario acertó la pregunta. Para mayor entendimiento de la variable, se transforma de la siguiente manera: 0=No y 1= Yes. Lo anterior se puede ver en la Tabla 18.
-
-```{r}
-#Frecuencia
-
-kable(datos_modelo %>% group_by(acertou) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Acertou corregidos") %>% 
-  kable_styling(full_width = F,position = "center") %>% 
-  kable_minimal()
-```
-
-<center>**Tabla 17.** Valores únicos de la variable "acertou"</center>
-
-<br>
-
-```{r}
-datos_modelo$acertou <- as.factor(datos_modelo$acertou)
-datos_modelo <- datos_modelo %>% 
-  mutate(acertou = recode(acertou,
-                              "0" = "No",
-                              "1" = "Yes"))
-```
-
-```{r}
-
-kable(datos_modelo %>% group_by(acertou) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Acertou") %>% 
-  kable_styling(full_width = F,position = "center") %>% 
-  kable_minimal()
-```
-
-<center>**Tabla 18.** Valores únicos de la variable "acertou" corregidos</center>
-
-<br>
-
 ```{r}
 datos_modelo$gp.carrers <- as.factor(datos_modelo$gp.carrers)
 datos_modelo$gp.previous.experience <- as.factor(datos_modelo$gp.previous.experience)
@@ -421,7 +388,7 @@ datos_modelo$outdated <- as.factor(datos_modelo$outdated)
 
 ### 2.3- Análisis de valores NA
 
-En la Tabla 19 podemos observar los valores, NA por cada variable de la base de datos.
+En la Tabla 17 podemos observar los valores, NA por cada variable de la base de datos.
 
 ```{r}
 #Cantidad de registros nulos
@@ -431,11 +398,11 @@ kable(apply(is.na(datos_modelo),2,sum),caption = "Valores NA") %>%
   kable_minimal()
 ```
 
-<center>**Tabla 19.** Cantidad de valores NA de cada variable de la base datos</center>
+<center>**Tabla 17.** Cantidad de valores NA de cada variable de la base datos</center>
 
 <br>
 
-Se puede observar que las variables "modality_id", "scholarity_id", "nullified" y "outdated" se tiene la misma cantidad de valores NA. En la Tabla 20 se observa los registros donde se evidencia esto.
+Se puede observar que las variables "modality_id", "scholarity_id", "nullified" y "outdated" se tiene la misma cantidad de valores NA. En la Tabla 18 se observa los registros donde se evidencia esto.
 
 ```{r}
 
@@ -444,17 +411,17 @@ kable(head(datos_modelo[is.na(datos_modelo$modality_id),],5),caption = "Registro
   kable_minimal()
 ```
 
-<center>**Tabla 20.** Registros del dataset donde las variables "modality_id", "scholarity_id", "nullified" y "outdated" son NA</center>
+<center>**Tabla 18.** Registros del dataset donde las variables "modality_id", "scholarity_id", "nullified" y "outdated" son NA</center>
 
 <br>
 
-En la Tabla 20 podemos observar que se cumple que en los 178 registros donde las variables "modality_id", "scholarity_id", "nullified" y "outdated" son NA, son los mismos. Se procede a eliminar estos registros.
+En la Tabla 18 podemos observar que se cumple que en los 178 registros donde las variables "modality_id", "scholarity_id", "nullified" y "outdated" son NA, son los mismos. Se procede a eliminar estos registros.
 
 ```{r}
 datos_modelo <- datos_modelo[!is.na(datos_modelo$modality_id),]
 ```
 
-En la Tabla 21, se vuelve a calcular la cantidad de valores NA por cada variable.
+En la Tabla 19, se vuelve a calcular la cantidad de valores NA por cada variable.
 
 ```{r}
 kable(apply(is.na(datos_modelo),2,sum),caption = "Valores NA") %>% 
@@ -462,11 +429,11 @@ kable(apply(is.na(datos_modelo),2,sum),caption = "Valores NA") %>%
   kable_minimal()
 ```
 
-<center>**Tabla 21.** Cantidad de valores NA de cada variable de la base datos</center>
+<center>**Tabla 19.** Cantidad de valores NA de cada variable de la base datos</center>
 
 <br>
 
-Para las variables "gp.carrers', "gp.previous.experience" y "difficulty", se les va a sustituir sus valores NA por el valor de la moda.
+Para las variables "gp.carrers',"gp.previous.experience" y "difficulty", se les va a sustituir sus valores NA por el valor de la moda.
 
 ```{r}
 datos_modelo$gp.carrers[is.na(datos_modelo$gp.carrers)] <- "Policial"
@@ -474,8 +441,202 @@ datos_modelo$gp.previous.experience[is.na(datos_modelo$gp.previous.experience)] 
 datos_modelo$difficulty[is.na(datos_modelo$difficulty)] <- "level_2"
 ```
 
-Para la variable "right_answer", los valores NA se van a
+Para la variable "right_answer", los valores NA se van a sustituir por el valor de la moda, de acuerdo las posibles respuesta dependiendo del tipo de pregunta (modality_id).
 
 ```{r}
-#pepe <- datos_modelo[is.na(datos_modelo$modality_id),]
+div1 <- datos_modelo[datos_modelo$modality_id=="S_M",]
+div2 <- datos_modelo[datos_modelo$modality_id=="V_F",]
 ```
+
+En la Tabla 20, podemos observar la cantidad de valores de cada valor único de la variable "right_answer" cuando la variable modality_id es igual a S_M. Y en la Tabla 21, podemos observar la cantidad de valores de cada valor único de la variable "right_answer" cuando la variable modality_id es igual a V_F
+
+```{r}
+kable(div1 %>% group_by(right_answer) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Right Answer") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 20.** Valores únicos de la variable "right_answer" cuando modality_id = S_M</center>
+
+<br>
+
+```{r}
+
+kable(div2 %>% group_by(right_answer) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Right Answer") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 21.** Valores únicos de la variable "right_answer" cuando modality_id = V_F</center>
+
+<br>
+
+En la Tabla 21, se observa un valor único "D" . Estos valores serán cambiados por el valor NA, ya que los únicos valores permidos para la variable "right_answer" cuando la variable "modality_id" es igual a V_F, son E y C.
+
+```{r}
+datos_modelo$right_answer[(datos_modelo$modality_id=="V_F" & datos_modelo$right_answer == "D")] <- NA
+
+datos_modelo$right_answer[(datos_modelo$modality_id=="V_F" & is.na(datos_modelo$right_answer))] <- "E"
+
+datos_modelo$right_answer[(datos_modelo$modality_id=="S_M" & is.na(datos_modelo$right_answer))] <- "C"
+```
+
+Una vez corregido los valores NA de la variable "right_answer" por sus respectiva moda, en la Tabla 22 se puede observar las nuevas cantidades de valores NA por variable.
+
+```{r}
+kable(apply(is.na(datos_modelo),2,sum),caption = "Valores NA") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 22.** Cantidad de valores NA de cada variable de la base datos</center>
+
+<br>
+
+### 2.4- Transformación de las variables categóricas
+
+Se convierten las variables categóricas a variables dummy, exceptuando la variable objetivo ("acertou"). Hay que tener en cuenta que todas las variables de la base de datos son categóricas. Con lo anterior, se obtiene un dataset con las dimensiones que se puede ver en la Tabla 23.
+
+```{r}
+Y <- as.data.frame(datos_modelo$acertou)
+datos_modelo <- subset(datos_modelo, select = -c(acertou))
+onehotencoding <- dummyVars(~.,data = datos_modelo)
+X <- as.data.frame(predict(onehotencoding,datos_modelo))
+datos_modelo <- as.data.frame(cbind(X,Y))
+```
+
+```{r}
+size <- data.frame(Filas=nrow(datos_modelo),Columnas = ncol(datos_modelo))
+
+kable(size,caption = "Tamaño del dataset") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 23.** Dimensiones del dataset</center>
+
+<br>
+
+## 3- Modelo predictivo
+
+Ya con la limpieza realizada a los datos, se procede con la creación del modelo de predicción. Para realizar el modelo, se escoge el algoritmo KNN (K vecinos más cercanos). Este algoritmo "es un clasificador de aprendizaje supervisado no paramétrico, que utiliza la proximidad para hacer clasificaciones o predicciones sobre la agrupación de un punto de datos individual"(IBM, 2022).
+
+### 3.1- Transformación de la variable objetivo
+
+Como paso inicial para la creación del modelo, se transforma la variable objetivo "Acertou" la cual tiene valores 0 y 1, a valores "No" o "Yes" respectivamente.
+
+```{r}
+colnames(datos_modelo)[38] <- "Acertou"
+datos_modelo$Acertou <- factor(datos_modelo$Acertou, levels = c("0", "1"), labels = c("No", "Yes"))
+```
+
+### 3.2- División del conjunto de datos en entrenamiento y validación
+
+El conjunto de datos se va a dividir de la siguiente forma: 80% para el conjunto de entrenamiento y el 20% para el conjunto de validación.
+
+```{r}
+set.seed(20)
+n_muestra <- dim(datos_modelo)[1]
+p_vl <- 0.2 # proporción de datos para validación
+ix_vl <- sample(n_muestra,size = round(n_muestra*p_vl),
+                replace = FALSE)
+datos_vl <- datos_modelo[ix_vl,]
+datos_tr <- datos_modelo[-ix_vl,]
+```
+
+Se realiza una revisión de la tasa de la variable "aciertos" en los conjuntos de entrenamiento y de validación.
+
+```{r}
+kable(proportions(table(datos_tr$Acertou)),caption = "Proporción de la variable Acertou en el conjunto de entrenamiento") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 24.** Proporción de la variable Acertou en el conjunto de entrenamiento</center>
+
+<br>
+
+```{r}
+kable(proportions(table(datos_vl$Acertou)),caption = "Proporción de la variable Acertou en el conjunto de validación") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 25.** Proporción de la variable Acertou en el conjunto de entrenamiento</center>
+
+<br>
+
+Como se puede ver en las Tablas 24 y 25, se mantiene la misma proporción de la variable "aciertos" en ambos conjuntos de datos.
+
+```{r}
+#Se divide ambos conjuntos en variables X y Y.
+
+## Conjunto de entrenamiento
+X_tr <- subset(datos_tr,select = -c(Acertou))
+Y_tr <- datos_tr$Acertou
+Y_tr <- as.factor(Y_tr)
+
+## Conjunto de validacion
+X_vl <- subset(datos_vl,select = -c(Acertou))
+Y_vl <- datos_vl$Acertou
+Y_vl <- as.factor(Y_vl)
+```
+
+### 3.3- A.C.P (Análisis de las componentes principales)
+
+Se realiza un Análisis de Componentes Principales para la selección de las variables, el cual se puede ver en la Tabla 26. Para conservar el 91.42% de la variabilidad explicada en las variables, se va a trabajar con las primeras 11 componentes principales.
+
+```{r}
+#Se realiza el calculo del ACP
+ACP <- prcomp(X_tr, center = FALSE)
+
+p<-summary(ACP)
+pander(p[["importance"]])
+```
+
+<center>**Tabla 26.** Análisis de Componentes Principales</center>
+
+<br>
+
+```{r}
+#Se seleccionan las primeras 11 componentes principales
+X_tr_acp <- data.frame(ACP$x[,1:11])
+```
+
+### 3.4- valor K óptimo
+
+Como criterio,,jjddjdj
+
+```{r}
+#función para encontrar el valor optimo K
+
+optimo_K <- function(k,X_t,Y_t){
+  
+  modelo_knn <- knn3(x=X_t, y = Y_t, k = k)
+  predicciones_train <- predict(modelo_knn, newdata = X_t, type = "class")
+  
+  mat_conf <- table(predicciones_train,Y_t)
+  accuracy <- sum(diag(mat_conf))/sum(mat_conf)
+  sensibilidad <- mat_conf[1,1]/(mat_conf[1,1]+mat_conf[2,1])
+  especificidad <-    mat_conf[2,2]/(mat_conf[2,2]+mat_conf[1,2])
+  resultado <- list(accuracy=accuracy,
+                    sensibilidad=sensibilidad,
+                    especificidad=especificidad)
+  return(resultado)
+}
+```
+
+```{r}
+k <- 2:30
+
+#resultados <- optimo_K(k=3, X_t=X_tr_acp,Y_t=Y_tr)
+#resultados <- t(resultados)
+
+#rownames(resultados) <- 1:nrow(resultados)
+#resultados <- as.data.frame(resultados)
+#resultados$Valor_K <- k
+```
+
+## Referencias
+
+-   IBM. (2022). Algoritmo de k vecinos más cercanos. 2022, noviembre 24, de ibm.com. Sitio web: https://www.ibm.com/co-es/topics/knn
