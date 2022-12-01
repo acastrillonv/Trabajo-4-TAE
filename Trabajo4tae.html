@@ -216,7 +216,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Carrers corregidas</caption>
+<caption>Valores únicos - Carrers corregidos</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> gp.carrers </th>
@@ -290,7 +290,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 3.</strong> Valores únicos de la variable “gp.carrers” corregidas
+<strong>Tabla 3.</strong> Valores únicos de la variable “gp.carrers” corregidos
 </center>
 <p><br></p>
 </section>
@@ -479,7 +479,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Modality</caption>
+<caption>Valores únicos - Modality corregidos</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> modality_id </th>
@@ -576,7 +576,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Right Answer corregida</caption>
+<caption>Valores únicos - Right Answer corregidos</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> right_answer </th>
@@ -742,7 +742,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Nullified corregido</caption>
+<caption>Valores únicos - Nullified corregidos</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> nullified </th>
@@ -815,7 +815,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Outdated corregida</caption>
+<caption>Valores únicos - Outdated corregidos</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> outdated </th>
@@ -852,7 +852,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Acertou</caption>
+<caption>Valores únicos - Acertou corregidos</caption>
  <thead>
   <tr>
    <th style="text-align:right;"> acertou </th>
@@ -909,10 +909,14 @@ ul.task-list li input[type="checkbox"] {
 <strong>Tabla 18.</strong> Valores únicos de la variable “acertou” corregidos
 </center>
 <p><br></p>
+<div class="cell">
+
+</div>
 </section>
 </section>
 <section id="análisis-de-valores-na" class="level3">
 <h3 class="anchored" data-anchor-id="análisis-de-valores-na">2.3- Análisis de valores NA</h3>
+<p>En la Tabla 19 podemos observar los valores, NA por cada variable de la base de datos.</p>
 <div class="cell">
 <div class="cell-output-display">
 
@@ -967,9 +971,169 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 19.</strong> Cantidad de valores NA por variable de la base datos
+<strong>Tabla 19.</strong> Cantidad de valores NA de cada variable de la base datos
 </center>
 <p><br></p>
+<p>Se puede observar que las variables “modality_id”, “scholarity_id”, “nullified” y “outdated” se tiene la misma cantidad de valores NA. En la Tabla 20 se observa los registros donde se evidencia esto.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Registros del dataset</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:left;"> gp.carrers </th>
+   <th style="text-align:left;"> gp.previous.experience </th>
+   <th style="text-align:left;"> acertou </th>
+   <th style="text-align:left;"> difficulty </th>
+   <th style="text-align:left;"> modality_id </th>
+   <th style="text-align:left;"> right_answer </th>
+   <th style="text-align:left;"> scholarity_id </th>
+   <th style="text-align:left;"> nullified </th>
+   <th style="text-align:left;"> outdated </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 38636 </td>
+   <td style="text-align:left;"> Policial </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 52691 </td>
+   <td style="text-align:left;"> Tribunal </td>
+   <td style="text-align:left;"> experient </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 52692 </td>
+   <td style="text-align:left;"> Tribunal </td>
+   <td style="text-align:left;"> experient </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 52693 </td>
+   <td style="text-align:left;"> Tribunal </td>
+   <td style="text-align:left;"> experient </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 52694 </td>
+   <td style="text-align:left;"> Tribunal </td>
+   <td style="text-align:left;"> experient </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 20.</strong> Registros del dataset donde las variables “modality_id”, “scholarity_id”, “nullified” y “outdated” son NA
+</center>
+<p><br></p>
+<p>En la Tabla 20 podemos observar que se cumple que en los 178 registros donde las variables “modality_id”, “scholarity_id”, “nullified” y “outdated” son NA, son los mismos. Se procede a eliminar estos registros.</p>
+<div class="cell">
+
+</div>
+<p>En la Tabla 21, se vuelve a calcular la cantidad de valores NA por cada variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores NA</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> x </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> gp.carrers </td>
+   <td style="text-align:right;"> 103593 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gp.previous.experience </td>
+   <td style="text-align:right;"> 1037360 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> acertou </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> difficulty </td>
+   <td style="text-align:right;"> 2436 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> modality_id </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> right_answer </td>
+   <td style="text-align:right;"> 39 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> scholarity_id </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nullified </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> outdated </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 21.</strong> Cantidad de valores NA de cada variable de la base datos
+</center>
+<p><br></p>
+<p>Para las variables “gp.carrers’,”gp.previous.experience” y “difficulty”, se les va a sustituir sus valores NA por el valor de la moda.</p>
+<div class="cell">
+
+</div>
+<p>Para la variable “right_answer”, los valores NA se van a</p>
+<div class="cell">
+
+</div>
 </section>
 </section>
 

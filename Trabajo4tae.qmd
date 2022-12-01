@@ -14,7 +14,6 @@ library(kableExtra)
 library(dplyr)
 library(tidyverse)
 library(stringr)
-
 ```
 
 ## 1- Contexto del problema
@@ -408,6 +407,18 @@ kable(datos_modelo %>% group_by(acertou) %>% summarise(n = n()) %>% arrange(-n),
 
 <br>
 
+```{r}
+datos_modelo$gp.carrers <- as.factor(datos_modelo$gp.carrers)
+datos_modelo$gp.previous.experience <- as.factor(datos_modelo$gp.previous.experience)
+datos_modelo$acertou <- as.factor(datos_modelo$acertou)
+datos_modelo$difficulty <- as.factor(datos_modelo$difficulty)
+datos_modelo$modality_id <- as.factor(datos_modelo$modality_id)
+datos_modelo$right_answer <- as.factor(datos_modelo$right_answer)
+datos_modelo$scholarity_id <- as.factor(datos_modelo$scholarity_id)
+datos_modelo$nullified <- as.factor(datos_modelo$nullified)
+datos_modelo$outdated <- as.factor(datos_modelo$outdated)
+```
+
 ### 2.3- Análisis de valores NA
 
 En la Tabla 19 podemos observar los valores, NA por cada variable de la base de datos.
@@ -420,6 +431,51 @@ kable(apply(is.na(datos_modelo),2,sum),caption = "Valores NA") %>%
   kable_minimal()
 ```
 
-<center>**Tabla 19.** Cantidad de valores NA por variable de la base datos</center>
+<center>**Tabla 19.** Cantidad de valores NA de cada variable de la base datos</center>
 
 <br>
+
+Se puede observar que las variables "modality_id", "scholarity_id", "nullified" y "outdated" se tiene la misma cantidad de valores NA. En la Tabla 20 se observa los registros donde se evidencia esto.
+
+```{r}
+
+kable(head(datos_modelo[is.na(datos_modelo$modality_id),],5),caption = "Registros del dataset") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 20.** Registros del dataset donde las variables "modality_id", "scholarity_id", "nullified" y "outdated" son NA</center>
+
+<br>
+
+En la Tabla 20 podemos observar que se cumple que en los 178 registros donde las variables "modality_id", "scholarity_id", "nullified" y "outdated" son NA, son los mismos. Se procede a eliminar estos registros.
+
+```{r}
+datos_modelo <- datos_modelo[!is.na(datos_modelo$modality_id),]
+```
+
+En la Tabla 21, se vuelve a calcular la cantidad de valores NA por cada variable.
+
+```{r}
+kable(apply(is.na(datos_modelo),2,sum),caption = "Valores NA") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 21.** Cantidad de valores NA de cada variable de la base datos</center>
+
+<br>
+
+Para las variables "gp.carrers', "gp.previous.experience" y "difficulty", se les va a sustituir sus valores NA por el valor de la moda.
+
+```{r}
+datos_modelo$gp.carrers[is.na(datos_modelo$gp.carrers)] <- "Policial"
+datos_modelo$gp.previous.experience[is.na(datos_modelo$gp.previous.experience)] <- "beginner"
+datos_modelo$difficulty[is.na(datos_modelo$difficulty)] <- "level_2"
+```
+
+Para la variable "right_answer", los valores NA se van a
+
+```{r}
+#pepe <- datos_modelo[is.na(datos_modelo$modality_id),]
+```
