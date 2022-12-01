@@ -12,9 +12,12 @@ knitr::opts_chunk$set(echo = FALSE,message = F,warning = F)
 ```{r}
 library(kableExtra)
 library(dplyr)
+library(tidyverse)
+library(stringr)
+
 ```
 
-## Contexto del problema
+## 1- Contexto del problema
 
 El objetivo de esta competencia es crear un modelo de aprendizaje automático capaz de predecir la probabilidad de que un estudiante determinado responda correctamente la siguiente pregunta, dada una secuencia previa de cien resoluciones.
 
@@ -87,12 +90,12 @@ datos_modelo <- datos_modelo %>% mutate(outdated = ifelse(outdated ==  "" , NA, 
 
 #### Variable "country"
 
-En la Tabla 1 podemos observar los valores únicos de esta variable.
+En la Tabla 1 podemos observar los valores únicos de esta variable. Para propósitos de estudio, solo se van a tener en cuenta los usuarios unicamente del país Brasil, los cuales son 19.836 usuarios de los 20.000 en total. Al hacer lo anterior, se va a proceder a eliminar esta variable, ya que ya no se considera relevante
 
 ```{r}
-#Frecuencia de la variable ano
+#Frecuencia
 
-kable(head(datos_modelo %>% group_by(country) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Country") %>% 
+kable(head(datos_modelo %>% group_by(country) %>% summarise(n = n()) %>% arrange(-n),4),caption = "Los primeros valores únicos - Country") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
 ```
@@ -101,12 +104,18 @@ kable(head(datos_modelo %>% group_by(country) %>% summarise(n = n()) %>% arrange
 
 <br>
 
+```{r}
+datos_modelo <- datos_modelo[datos_modelo$country == "Brazil",]
+datos_modelo <- datos_modelo[!is.na(datos_modelo$country),]
+datos_modelo <- subset(datos_modelo, select = -c(country))
+```
+
 #### Variable "gp.carrers"
 
-En la Tabla 2 podemos observar los valores únicos de esta variable.
+En la Tabla 2 podemos observar los valores únicos de esta variable, los cuales son 1.452. Esta variable indica la carrera o el grupo de carreras al que pertenece el usuario. Debido a que los usuarios pueden pertenecer a diferentes carreras, se tomará unicamente la primera carrera de cada grupo. Esta correción se puede ver en la Tabla 3.
 
 ```{r}
-#Frecuencia de la variable ano
+#Frecuencia
 
 kable(head(datos_modelo %>% group_by(gp.carrers) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
   kable_styling(full_width = F,position = "center") %>% 
@@ -117,136 +126,293 @@ kable(head(datos_modelo %>% group_by(gp.carrers) %>% summarise(n = n()) %>% arra
 
 <br>
 
-#### Variable "gp.previous.experience"
+```{r}
+carreras <-str_split_fixed(datos_modelo$gp.carrers, ",", 2)
+carreras <- as.data.frame(carreras)
+datos_modelo$gp.carrers <- carreras$V1
 
-En la Tabla 3 podemos observar los valores únicos de esta variable.
+datos_modelo <- datos_modelo %>% mutate(gp.carrers = ifelse(gp.carrers ==  "" , NA, gp.carrers))
+
+datos_modelo <- datos_modelo %>% mutate(gp.carrers = ifelse(gp.carrers ==  "Exercito" ,"Exército", gp.carrers))
+```
 
 ```{r}
-#Frecuencia de la variable ano
+kable(datos_modelo %>% group_by(gp.carrers) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Carrers corregidos") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal
+```
 
-kable(head(datos_modelo %>% group_by(gp.previous.experience) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+<center>**Tabla 3.** Valores únicos de la variable "gp.carrers" corregidos</center>
+
+<br>
+
+#### Variable "gp.previous.experience"
+
+En la Tabla 4 podemos observar los valores únicos de esta variable, los cuales son "beginner", "experient", " professional" y "highly_experient". Esta variable indica la experiencia previa como examinado del servicio civil.
+
+```{r}
+#Frecuencia
+
+kable(datos_modelo %>% group_by(gp.previous.experience) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Previous Experience") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
 ```
 
-<center>**Tabla 3.** Valores únicos de la variable "gp.previous.experience"</center>
+<center>**Tabla 4.** Valores únicos de la variable "gp.previous.experience"</center>
 
 <br>
 
 #### Variable "difficulty"
 
-En la Tabla 4 podemos observar los valores únicos de esta variable.
+En la Tabla 5 podemos observar los valores únicos de esta variable, los cuales son: "1", "2", "3", "4" y "5". Esta variable indica la dificultad de la pregunta. Para mayor entendimiento de la variable, se transforma de la siguiente manera: 1=level 1, 2= level 2, 3= level 3, 4= level 4 y 5= level 5. Lo anterior se puede ver en la Tabla 6.
 
 ```{r}
-#Frecuencia de la variable ano
+#Frecuencia
 
-kable(head(datos_modelo %>% group_by(difficulty) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+kable(head(datos_modelo %>% group_by(difficulty) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Difficulty") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
 ```
 
-<center>**Tabla 4.** Valores únicos de la variable "difficulty"</center>
+<center>**Tabla 5.** Valores únicos de la variable "difficulty"</center>
+
+<br>
+
+```{r}
+datos_modelo$difficulty <- as.factor(datos_modelo$difficulty)
+datos_modelo <- datos_modelo %>% 
+  mutate(difficulty = recode(difficulty,
+                             "1" = "level_1",
+                             "2" = "level_2",
+                             "3" = "level_3",
+                             "4" = "level_4",
+                             "5" = "level_5"))
+```
+
+```{r}
+
+kable(head(datos_modelo %>% group_by(difficulty) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Difficulty corregido") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 6.** Valores únicos de la variable "difficulty" corregidos</center>
 
 <br>
 
 #### Variable "modality_id"
 
-En la Tabla 5 podemos observar los valores únicos de esta variable.
+En la Tabla 7 podemos observar los valores únicos de esta variable, los cuales son "1" y "2". Esta variable indica el tipo de pregunta (Selección multiple o correcto/incorrecto). Para mejor entendimiento, se cambiará los valores 1 por S_M y el valor 2 por V_F. Lo anterior se puede ver en la Tabla 8.
 
 ```{r}
-#Frecuencia de la variable ano
+#Frecuencia
 
-kable(head(datos_modelo %>% group_by(modality_id) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+kable(datos_modelo %>% group_by(modality_id) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Modality") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
 ```
 
-<center>**Tabla 5.** Valores únicos de la variable "modality_id"</center>
+<center>**Tabla 7.** Valores únicos de la variable "modality_id"</center>
+
+<br>
+
+```{r}
+datos_modelo$modality_id <- as.factor(datos_modelo$modality_id)
+datos_modelo <- datos_modelo %>% 
+  mutate(modality_id = recode(modality_id,
+                              "1" = "S_M",
+                              "2" = "V_F"))
+```
+
+```{r}
+
+kable(datos_modelo %>% group_by(modality_id) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Modality corregidos") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 8.** Valores únicos de la variable "modality_id" corregidos</center>
 
 <br>
 
 #### Variable "right_answer"
 
-En la Tabla 6 podemos observar los valores únicos de esta variable.
+En la Tabla 9 podemos observar los valores únicos de esta variable. Esta variable indica la respuesta correcta de la pregunta. Se cambiaran los valores diferentes a A,B, C, D y E por NA. Lo anterior se puede ver en la Tabla 10.
 
 ```{r}
-#Frecuencia de la variable ano
+#Frecuencia
 
-kable(head(datos_modelo %>% group_by(right_answer) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+kable(head(datos_modelo %>% group_by(right_answer) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Right Answer") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
 ```
 
-<center>**Tabla 6.** Valores únicos de la variable "right_answer"</center>
+<center>**Tabla 9.** Valores únicos de la variable "right_answer"</center>
+
+<br>
+
+```{r}
+datos_modelo <- datos_modelo %>% mutate(right_answer = ifelse(right_answer ==  "X" , NA, right_answer))
+datos_modelo <- datos_modelo %>% mutate(right_answer = ifelse(right_answer ==  "*" , NA, right_answer))
+datos_modelo <- datos_modelo %>% mutate(right_answer = ifelse(right_answer ==  "+" , NA, right_answer))
+```
+
+```{r}
+
+kable(head(datos_modelo %>% group_by(right_answer) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Right Answer corregidos") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 10.** Valores únicos de la variable "right_answer" corregidos</center>
 
 <br>
 
 #### Variable "scholarity_id"
 
-En la Tabla 7 podemos observar los valores únicos de esta variable.
+En la Tabla 11 podemos observar los valores únicos de esta variable, los cuales son "1", "2" y "3". Esta variable indica el nivel educativo de la pregunta. Para mayor entendimiento, los valores se van a transformar por: 1= level_1, 2= level_2 y 3= level_3. Lo anterior se puede ver en la Tabla 12.
 
 ```{r}
-#Frecuencia de la variable ano
+#Frecuencia
 
-kable(head(datos_modelo %>% group_by(scholarity_id) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+kable(datos_modelo %>% group_by(scholarity_id) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Scholarity") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
 ```
 
-<center>**Tabla 7.** Valores únicos de la variable "scholarity_id"</center>
+<center>**Tabla 11.** Valores únicos de la variable "scholarity_id"</center>
+
+<br>
+
+```{r}
+datos_modelo$scholarity_id <- as.factor(datos_modelo$scholarity_id)
+datos_modelo <- datos_modelo %>% 
+  mutate(scholarity_id = recode(scholarity_id,
+                              "1" = "level_1",
+                              "2" = "level_2",
+                              "3" = "level_3"))
+```
+
+```{r}
+
+kable(datos_modelo %>% group_by(scholarity_id) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Scholarity Corregidos") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 12.** Valores únicos de la variable "scholarity_id" corregidos</center>
 
 <br>
 
 #### Variable "nullified"
 
-En la Tabla 8 podemos observar los valores únicos de esta variable.
+En la Tabla 13 podemos observar los valores únicos de esta variable, los cuales son "0" y "1". Esta variable indica si la pregunta fue cancelada. Para mayor entendimiento de la variable, se transforma de la siguiente manera: 0=No y 1= Yes. Lo anterior se puede ver en la Tabla 14.
 
 ```{r}
-#Frecuencia de la variable ano
+#Frecuencia
 
-kable(head(datos_modelo %>% group_by(nullified) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+kable(datos_modelo %>% group_by(nullified) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Nullified") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
 ```
 
-<center>**Tabla 8.** Valores únicos de la variable "nullified"</center>
+<center>**Tabla 13.** Valores únicos de la variable "nullified"</center>
+
+<br>
+
+```{r}
+datos_modelo$nullified <- as.factor(datos_modelo$nullified)
+datos_modelo <- datos_modelo %>% 
+  mutate(nullified = recode(nullified,
+                              "0" = "No",
+                              "1" = "Yes"))
+```
+
+```{r}
+
+kable(datos_modelo %>% group_by(nullified) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Nullified corregidos") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 14.** Valores únicos de la variable "nullified" corregida</center>
 
 <br>
 
 #### Variable "outdated"
 
-En la Tabla 9 podemos observar los valores únicos de esta variable.
+En la Tabla 15 podemos observar los valores únicos de esta variable, los cuales son "0" y "1". Esta variable indica si la pregunta es desactualizada. Para mayor entendimiento de la variable, se transforma de la siguiente manera: 0=No y 1= Yes. Lo anterior se puede ver en la Tabla 16.
 
 ```{r}
-#Frecuencia de la variable ano
+#Frecuencia
 
-kable(head(datos_modelo %>% group_by(outdated) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+kable(datos_modelo %>% group_by(outdated) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Outdated") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
 ```
 
-<center>**Tabla 9.** Valores únicos de la variable "outdated"</center>
+<center>**Tabla 15.** Valores únicos de la variable "outdated"</center>
+
+<br>
+
+```{r}
+datos_modelo$outdated <- as.factor(datos_modelo$outdated)
+datos_modelo <- datos_modelo %>% 
+  mutate(outdated = recode(outdated,
+                              "0" = "No",
+                              "1" = "Yes"))
+```
+
+```{r}
+kable(datos_modelo %>% group_by(outdated) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Outdated corregidos") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 16.** Valores únicos de la variable "outdated" corregidos</center>
 
 <br>
 
 #### Variable "acertou"
 
-En la Tabla 10 podemos observar los valores únicos de esta variable.
+En la Tabla 17 podemos observar los valores únicos de esta variable, los cuales son "0" y "1". Esta variable indica si el usuario acertó la pregunta. Para mayor entendimiento de la variable, se transforma de la siguiente manera: 0=No y 1= Yes. Lo anterior se puede ver en la Tabla 18.
 
 ```{r}
-#Frecuencia de la variable ano
+#Frecuencia
 
-kable(head(datos_modelo %>% group_by(acertou) %>% summarise(n = n()) %>% arrange(-n),10),caption = "Valores únicos - Carrers") %>% 
+kable(datos_modelo %>% group_by(acertou) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Acertou corregidos") %>% 
   kable_styling(full_width = F,position = "center") %>% 
   kable_minimal()
 ```
 
-<center>**Tabla 10.** Valores únicos de la variable "acertou"</center>
+<center>**Tabla 17.** Valores únicos de la variable "acertou"</center>
 
 <br>
 
 ```{r}
+datos_modelo$acertou <- as.factor(datos_modelo$acertou)
+datos_modelo <- datos_modelo %>% 
+  mutate(acertou = recode(acertou,
+                              "0" = "No",
+                              "1" = "Yes"))
+```
 
+```{r}
+
+kable(datos_modelo %>% group_by(acertou) %>% summarise(n = n()) %>% arrange(-n),caption = "Valores únicos - Acertou") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 18.** Valores únicos de la variable "acertou" corregidos</center>
+
+<br>
+
+### 2.3- Análisis de valores NA
+
+En la Tabla 19 podemos observar los valores, NA por cada variable de la base de datos.
+
+```{r}
 #Cantidad de registros nulos
 
 kable(apply(is.na(datos_modelo),2,sum),caption = "Valores NA") %>% 
@@ -254,6 +420,6 @@ kable(apply(is.na(datos_modelo),2,sum),caption = "Valores NA") %>%
   kable_minimal()
 ```
 
-<center>**Tabla 11.** Cantidad de valores NA por variable de la base datos</center>
+<center>**Tabla 19.** Cantidad de valores NA por variable de la base datos</center>
 
 <br>

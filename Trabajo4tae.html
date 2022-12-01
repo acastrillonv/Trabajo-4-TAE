@@ -73,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
 
 </div>
 <section id="contexto-del-problema" class="level2">
-<h2 class="anchored" data-anchor-id="contexto-del-problema">Contexto del problema</h2>
+<h2 class="anchored" data-anchor-id="contexto-del-problema">1- Contexto del problema</h2>
 <p>El objetivo de esta competencia es crear un modelo de aprendizaje automático capaz de predecir la probabilidad de que un estudiante determinado responda correctamente la siguiente pregunta, dada una secuencia previa de cien resoluciones.</p>
 <div class="cell">
 
@@ -103,12 +103,12 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="análisis-de-las-variables-seleccionadas">2.2- Análisis de las variables seleccionadas</h3>
 <section id="variable-country" class="level4">
 <h4 class="anchored" data-anchor-id="variable-country">Variable “country”</h4>
-<p>En la Tabla 1 podemos observar los valores únicos de esta variable.</p>
+<p>En la Tabla 1 podemos observar los valores únicos de esta variable. Para propósitos de estudio, solo se van a tener en cuenta los usuarios unicamente del país Brasil, los cuales son 19.836 usuarios de los 20.000 en total. Al hacer lo anterior, se va a proceder a eliminar esta variable, ya que ya no se considera relevante</p>
 <div class="cell">
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Country</caption>
+<caption>Los primeros valores únicos - Country</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> country </th>
@@ -132,30 +132,6 @@ ul.task-list li input[type="checkbox"] {
    <td style="text-align:left;"> Portugal </td>
    <td style="text-align:right;"> 300 </td>
   </tr>
-  <tr>
-   <td style="text-align:left;"> Switzerland </td>
-   <td style="text-align:right;"> 300 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Argentina </td>
-   <td style="text-align:right;"> 200 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Australia </td>
-   <td style="text-align:right;"> 200 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Netherlands </td>
-   <td style="text-align:right;"> 200 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Spain </td>
-   <td style="text-align:right;"> 200 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Angola </td>
-   <td style="text-align:right;"> 100 </td>
-  </tr>
 </tbody>
 </table>
 
@@ -165,10 +141,13 @@ ul.task-list li input[type="checkbox"] {
 <strong>Tabla 1.</strong> Valores únicos de la variable “country”
 </center>
 <p><br></p>
+<div class="cell">
+
+</div>
 </section>
 <section id="variable-gp.carrers" class="level4">
 <h4 class="anchored" data-anchor-id="variable-gp.carrers">Variable “gp.carrers”</h4>
-<p>En la Tabla 2 podemos observar los valores únicos de esta variable.</p>
+<p>En la Tabla 2 podemos observar los valores únicos de esta variable, los cuales son 1.452. Esta variable indica la carrera o el grupo de carreras al que pertenece el usuario. Debido a que los usuarios pueden pertenecer a diferentes carreras, se tomará unicamente la primera carrera de cada grupo. Esta correción se puede ver en la Tabla 3.</p>
 <div class="cell">
 <div class="cell-output-display">
 
@@ -183,31 +162,31 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
   <tr>
    <td style="text-align:left;"> Policial </td>
-   <td style="text-align:right;"> 486700 </td>
+   <td style="text-align:right;"> 486300 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Jurídica </td>
-   <td style="text-align:right;"> 165500 </td>
+   <td style="text-align:right;"> 165000 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Outras </td>
-   <td style="text-align:right;"> 135700 </td>
+   <td style="text-align:right;"> 135400 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Tribunal </td>
-   <td style="text-align:right;"> 121500 </td>
+   <td style="text-align:right;"> 121300 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> NA </td>
-   <td style="text-align:right;"> 116900 </td>
+   <td style="text-align:right;"> 103600 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Administrativa </td>
-   <td style="text-align:right;"> 84200 </td>
+   <td style="text-align:right;"> 83900 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Saúde </td>
-   <td style="text-align:right;"> 67800 </td>
+   <td style="text-align:right;"> 67500 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Educação </td>
@@ -215,11 +194,11 @@ ul.task-list li input[type="checkbox"] {
   </tr>
   <tr>
    <td style="text-align:left;"> Tribunal, Jurídica </td>
-   <td style="text-align:right;"> 54700 </td>
+   <td style="text-align:right;"> 54600 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Fiscal </td>
-   <td style="text-align:right;"> 45000 </td>
+   <td style="text-align:right;"> 44800 </td>
   </tr>
 </tbody>
 </table>
@@ -230,15 +209,99 @@ ul.task-list li input[type="checkbox"] {
 <strong>Tabla 2.</strong> Valores únicos de la variable “gp.carrers”
 </center>
 <p><br></p>
-</section>
-<section id="variable-gp.previous.experience" class="level4">
-<h4 class="anchored" data-anchor-id="variable-gp.previous.experience">Variable “gp.previous.experience”</h4>
-<p>En la Tabla 3 podemos observar los valores únicos de esta variable.</p>
+<div class="cell">
+
+</div>
 <div class="cell">
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Carrers</caption>
+<caption>Valores únicos - Carrers corregidas</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> gp.carrers </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Policial </td>
+   <td style="text-align:right;"> 620100 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tribunal </td>
+   <td style="text-align:right;"> 368300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Fiscal </td>
+   <td style="text-align:right;"> 199600 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Jurídica </td>
+   <td style="text-align:right;"> 182200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Outras </td>
+   <td style="text-align:right;"> 143200 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Administrativa </td>
+   <td style="text-align:right;"> 118700 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 103600 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Saúde </td>
+   <td style="text-align:right;"> 79500 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Educação </td>
+   <td style="text-align:right;"> 75700 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Bancária </td>
+   <td style="text-align:right;"> 27900 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Legislativa </td>
+   <td style="text-align:right;"> 24400 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Exército </td>
+   <td style="text-align:right;"> 14000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Controle e Gestão </td>
+   <td style="text-align:right;"> 10300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Marinha </td>
+   <td style="text-align:right;"> 8300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aeronáutica </td>
+   <td style="text-align:right;"> 7800 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 3.</strong> Valores únicos de la variable “gp.carrers” corregidas
+</center>
+<p><br></p>
+</section>
+<section id="variable-gp.previous.experience" class="level4">
+<h4 class="anchored" data-anchor-id="variable-gp.previous.experience">Variable “gp.previous.experience”</h4>
+<p>En la Tabla 4 podemos observar los valores únicos de esta variable, los cuales son “beginner”, “experient”, ” professional” y “highly_experient”. Esta variable indica la experiencia previa como examinado del servicio civil.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Previous Experience</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> gp.previous.experience </th>
@@ -248,23 +311,23 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
   <tr>
    <td style="text-align:left;"> NA </td>
-   <td style="text-align:right;"> 1052200 </td>
+   <td style="text-align:right;"> 1037400 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> beginner </td>
-   <td style="text-align:right;"> 546200 </td>
+   <td style="text-align:right;"> 545300 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> experient </td>
-   <td style="text-align:right;"> 270900 </td>
+   <td style="text-align:right;"> 270500 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> professional </td>
-   <td style="text-align:right;"> 93200 </td>
+   <td style="text-align:right;"> 93100 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> highly_experient </td>
-   <td style="text-align:right;"> 37500 </td>
+   <td style="text-align:right;"> 37300 </td>
   </tr>
 </tbody>
 </table>
@@ -272,18 +335,18 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 3.</strong> Valores únicos de la variable “gp.previous.experience”
+<strong>Tabla 4.</strong> Valores únicos de la variable “gp.previous.experience”
 </center>
 <p><br></p>
 </section>
 <section id="variable-difficulty" class="level4">
 <h4 class="anchored" data-anchor-id="variable-difficulty">Variable “difficulty”</h4>
-<p>En la Tabla 4 podemos observar los valores únicos de esta variable.</p>
+<p>En la Tabla 5 podemos observar los valores únicos de esta variable, los cuales son: “1”, “2”, “3”, “4” y “5”. Esta variable indica la dificultad de la pregunta. Para mayor entendimiento de la variable, se transforma de la siguiente manera: 1=level 1, 2= level 2, 3= level 3, 4= level 4 y 5= level 5. Lo anterior se puede ver en la Tabla 6.</p>
 <div class="cell">
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Carrers</caption>
+<caption>Valores únicos - Difficulty</caption>
  <thead>
   <tr>
    <th style="text-align:right;"> difficulty </th>
@@ -293,27 +356,27 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
   <tr>
    <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 804260 </td>
+   <td style="text-align:right;"> 797705 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 640501 </td>
+   <td style="text-align:right;"> 635004 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 465835 </td>
+   <td style="text-align:right;"> 462169 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 85528 </td>
+   <td style="text-align:right;"> 84875 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 2629 </td>
+   <td style="text-align:right;"> 2614 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 1247 </td>
+   <td style="text-align:right;"> 1233 </td>
   </tr>
 </tbody>
 </table>
@@ -321,18 +384,66 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 4.</strong> Valores únicos de la variable “difficulty”
+<strong>Tabla 5.</strong> Valores únicos de la variable “difficulty”
+</center>
+<p><br></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Difficulty corregido</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> difficulty </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> level_2 </td>
+   <td style="text-align:right;"> 797705 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> level_1 </td>
+   <td style="text-align:right;"> 635004 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> level_3 </td>
+   <td style="text-align:right;"> 462169 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> level_4 </td>
+   <td style="text-align:right;"> 84875 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 2614 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> level_5 </td>
+   <td style="text-align:right;"> 1233 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 6.</strong> Valores únicos de la variable “difficulty” corregidos
 </center>
 <p><br></p>
 </section>
 <section id="variable-modality_id" class="level4">
 <h4 class="anchored" data-anchor-id="variable-modality_id">Variable “modality_id”</h4>
-<p>En la Tabla 5 podemos observar los valores únicos de esta variable.</p>
+<p>En la Tabla 7 podemos observar los valores únicos de esta variable, los cuales son “1” y “2”. Esta variable indica el tipo de pregunta (Selección multiple o correcto/incorrecto). Para mejor entendimiento, se cambiará los valores 1 por S_M y el valor 2 por V_F. Lo anterior se puede ver en la Tabla 8.</p>
 <div class="cell">
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Carrers</caption>
+<caption>Valores únicos - Modality</caption>
  <thead>
   <tr>
    <th style="text-align:right;"> modality_id </th>
@@ -342,11 +453,11 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
   <tr>
    <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1505832 </td>
+   <td style="text-align:right;"> 1493620 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 493990 </td>
+   <td style="text-align:right;"> 489802 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> NA </td>
@@ -358,18 +469,54 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 5.</strong> Valores únicos de la variable “modality_id”
+<strong>Tabla 7.</strong> Valores únicos de la variable “modality_id”
+</center>
+<p><br></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Modality</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> modality_id </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> S_M </td>
+   <td style="text-align:right;"> 1493620 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> V_F </td>
+   <td style="text-align:right;"> 489802 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 8.</strong> Valores únicos de la variable “modality_id” corregidos
 </center>
 <p><br></p>
 </section>
 <section id="variable-right_answer" class="level4">
 <h4 class="anchored" data-anchor-id="variable-right_answer">Variable “right_answer”</h4>
-<p>En la Tabla 6 podemos observar los valores únicos de esta variable.</p>
+<p>En la Tabla 9 podemos observar los valores únicos de esta variable. Esta variable indica la respuesta correcta de la pregunta. Se cambiaran los valores diferentes a A,B, C, D y E por NA. Lo anterior se puede ver en la Tabla 10.</p>
 <div class="cell">
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Carrers</caption>
+<caption>Valores únicos - Right Answer</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> right_answer </th>
@@ -379,23 +526,23 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
   <tr>
    <td style="text-align:left;"> C </td>
-   <td style="text-align:right;"> 571076 </td>
+   <td style="text-align:right;"> 566247 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> E </td>
-   <td style="text-align:right;"> 471281 </td>
+   <td style="text-align:right;"> 467393 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> D </td>
-   <td style="text-align:right;"> 321375 </td>
+   <td style="text-align:right;"> 318788 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> B </td>
-   <td style="text-align:right;"> 318455 </td>
+   <td style="text-align:right;"> 315994 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> A </td>
-   <td style="text-align:right;"> 317595 </td>
+   <td style="text-align:right;"> 314961 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> NA </td>
@@ -403,7 +550,7 @@ ul.task-list li input[type="checkbox"] {
   </tr>
   <tr>
    <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 38 </td>
+   <td style="text-align:right;"> 37 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> * </td>
@@ -419,18 +566,66 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 6.</strong> Valores únicos de la variable “right_answer”
+<strong>Tabla 9.</strong> Valores únicos de la variable “right_answer”
+</center>
+<p><br></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Right Answer corregida</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> right_answer </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:right;"> 566247 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> E </td>
+   <td style="text-align:right;"> 467393 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> D </td>
+   <td style="text-align:right;"> 318788 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B </td>
+   <td style="text-align:right;"> 315994 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:right;"> 314961 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 217 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 10.</strong> Valores únicos de la variable “right_answer” corregidos
 </center>
 <p><br></p>
 </section>
 <section id="variable-scholarity_id" class="level4">
 <h4 class="anchored" data-anchor-id="variable-scholarity_id">Variable “scholarity_id”</h4>
-<p>En la Tabla 7 podemos observar los valores únicos de esta variable.</p>
+<p>En la Tabla 11 podemos observar los valores únicos de esta variable, los cuales son “1”, “2” y “3”. Esta variable indica el nivel educativo de la pregunta. Para mayor entendimiento, los valores se van a transformar por: 1= level_1, 2= level_2 y 3= level_3. Lo anterior se puede ver en la Tabla 12.</p>
 <div class="cell">
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Carrers</caption>
+<caption>Valores únicos - Scholarity</caption>
  <thead>
   <tr>
    <th style="text-align:right;"> scholarity_id </th>
@@ -440,15 +635,15 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
   <tr>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 1316353 </td>
+   <td style="text-align:right;"> 1306189 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 640697 </td>
+   <td style="text-align:right;"> 634838 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 42772 </td>
+   <td style="text-align:right;"> 42395 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> NA </td>
@@ -460,18 +655,58 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 7.</strong> Valores únicos de la variable “scholarity_id”
+<strong>Tabla 11.</strong> Valores únicos de la variable “scholarity_id”
+</center>
+<p><br></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Scholarity Corregidos</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> scholarity_id </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> level_3 </td>
+   <td style="text-align:right;"> 1306189 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> level_2 </td>
+   <td style="text-align:right;"> 634838 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> level_1 </td>
+   <td style="text-align:right;"> 42395 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 12.</strong> Valores únicos de la variable “scholarity_id” corregidos
 </center>
 <p><br></p>
 </section>
 <section id="variable-nullified" class="level4">
 <h4 class="anchored" data-anchor-id="variable-nullified">Variable “nullified”</h4>
-<p>En la Tabla 8 podemos observar los valores únicos de esta variable.</p>
+<p>En la Tabla 13 podemos observar los valores únicos de esta variable, los cuales son “0” y “1”. Esta variable indica si la pregunta fue cancelada. Para mayor entendimiento de la variable, se transforma de la siguiente manera: 0=No y 1= Yes. Lo anterior se puede ver en la Tabla 14.</p>
 <div class="cell">
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Carrers</caption>
+<caption>Valores únicos - Nullified</caption>
  <thead>
   <tr>
    <th style="text-align:right;"> nullified </th>
@@ -481,11 +716,11 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
   <tr>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1994668 </td>
+   <td style="text-align:right;"> 1978323 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 5154 </td>
+   <td style="text-align:right;"> 5099 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> NA </td>
@@ -497,18 +732,54 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 8.</strong> Valores únicos de la variable “nullified”
+<strong>Tabla 13.</strong> Valores únicos de la variable “nullified”
+</center>
+<p><br></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Nullified corregido</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> nullified </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 1978323 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 5099 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 14.</strong> Valores únicos de la variable “nullified” corregida
 </center>
 <p><br></p>
 </section>
 <section id="variable-outdated" class="level4">
 <h4 class="anchored" data-anchor-id="variable-outdated">Variable “outdated”</h4>
-<p>En la Tabla 9 podemos observar los valores únicos de esta variable.</p>
+<p>En la Tabla 15 podemos observar los valores únicos de esta variable, los cuales son “0” y “1”. Esta variable indica si la pregunta es desactualizada. Para mayor entendimiento de la variable, se transforma de la siguiente manera: 0=No y 1= Yes. Lo anterior se puede ver en la Tabla 16.</p>
 <div class="cell">
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Carrers</caption>
+<caption>Valores únicos - Outdated</caption>
  <thead>
   <tr>
    <th style="text-align:right;"> outdated </th>
@@ -518,11 +789,11 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
   <tr>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1964150 </td>
+   <td style="text-align:right;"> 1947963 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 35672 </td>
+   <td style="text-align:right;"> 35459 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> NA </td>
@@ -534,18 +805,54 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 9.</strong> Valores únicos de la variable “outdated”
+<strong>Tabla 15.</strong> Valores únicos de la variable “outdated”
+</center>
+<p><br></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Outdated corregida</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> outdated </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 1947963 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 35459 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 178 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 16.</strong> Valores únicos de la variable “outdated” corregidos
 </center>
 <p><br></p>
 </section>
 <section id="variable-acertou" class="level4">
 <h4 class="anchored" data-anchor-id="variable-acertou">Variable “acertou”</h4>
-<p>En la Tabla 10 podemos observar los valores únicos de esta variable.</p>
+<p>En la Tabla 17 podemos observar los valores únicos de esta variable, los cuales son “0” y “1”. Esta variable indica si el usuario acertó la pregunta. Para mayor entendimiento de la variable, se transforma de la siguiente manera: 0=No y 1= Yes. Lo anterior se puede ver en la Tabla 18.</p>
 <div class="cell">
 <div class="cell-output-display">
 
 <table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
-<caption>Valores únicos - Carrers</caption>
+<caption>Valores únicos - Acertou</caption>
  <thead>
   <tr>
    <th style="text-align:right;"> acertou </th>
@@ -555,11 +862,11 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
   <tr>
    <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1308561 </td>
+   <td style="text-align:right;"> 1297723 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 691439 </td>
+   <td style="text-align:right;"> 685877 </td>
   </tr>
 </tbody>
 </table>
@@ -567,9 +874,45 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 10.</strong> Valores únicos de la variable “acertou”
+<strong>Tabla 17.</strong> Valores únicos de la variable “acertou”
 </center>
 <p><br></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valores únicos - Acertou</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> acertou </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 1297723 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 685877 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 18.</strong> Valores únicos de la variable “acertou” corregidos
+</center>
+<p><br></p>
+</section>
+</section>
+<section id="análisis-de-valores-na" class="level3">
+<h3 class="anchored" data-anchor-id="análisis-de-valores-na">2.3- Análisis de valores NA</h3>
 <div class="cell">
 <div class="cell-output-display">
 
@@ -583,16 +926,12 @@ ul.task-list li input[type="checkbox"] {
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> country </td>
-   <td style="text-align:right;"> 13200 </td>
-  </tr>
-  <tr>
    <td style="text-align:left;"> gp.carrers </td>
-   <td style="text-align:right;"> 116900 </td>
+   <td style="text-align:right;"> 103600 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> gp.previous.experience </td>
-   <td style="text-align:right;"> 1052200 </td>
+   <td style="text-align:right;"> 1037400 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> acertou </td>
@@ -600,7 +939,7 @@ ul.task-list li input[type="checkbox"] {
   </tr>
   <tr>
    <td style="text-align:left;"> difficulty </td>
-   <td style="text-align:right;"> 2629 </td>
+   <td style="text-align:right;"> 2614 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> modality_id </td>
@@ -608,7 +947,7 @@ ul.task-list li input[type="checkbox"] {
   </tr>
   <tr>
    <td style="text-align:left;"> right_answer </td>
-   <td style="text-align:right;"> 178 </td>
+   <td style="text-align:right;"> 217 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> scholarity_id </td>
@@ -628,10 +967,9 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <center>
-<strong>Tabla 11.</strong> Cantidad de valores NA por variable de la base datos
+<strong>Tabla 19.</strong> Cantidad de valores NA por variable de la base datos
 </center>
 <p><br></p>
-</section>
 </section>
 </section>
 
