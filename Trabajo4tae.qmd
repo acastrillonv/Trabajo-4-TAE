@@ -972,7 +972,7 @@ Con los valores de las métricas obtenidos en las Tablas 38 y 40, podemos observ
 En la Tabla 41, se observa los valores de las métricas de precisión, sensibilidad y especificidad obtenidos al analizar el comportamiento del modelo de regresión logística con los datos de entrenamiento y validación, y el comportamiento del modelo clasificador bayesiano ingenuo con los datos de entrenamiento y validación.
 
 ```{r}
-metrics <- cbind(metricas3,metricas_val,metricas_train2,metricas_val2)
+metrics <- rbind(metricas3,metricas_val,metricas_train2,metricas_val2)
 metrics <- as.data.frame(metrics)
 rownames(metrics) <- c("Modelo RL Train","Modelo RL Test","Modelo CBI Train", "Modelo CBI Test")
 
@@ -981,13 +981,149 @@ kable(metrics,caption = "Valor de las métricas") %>%
   kable_minimal()
 ```
 
-<center>**Tabla 41.** Métricas del modelos creados</center>
+<center>**Tabla 41.** Métricas de los modelos creados</center>
 
 <br>
 
 Con lo reflejado en la Tabla 41, se decide utilizar el modelo clasificador bayesiano ingenuo creado, ya que posee mejores resultados en cada una de las métricas tanto en el entrenamiento, como en la validación.
 
 ### 3.6- Predicción de acierto en la pregunta 101 de todos los usuarios
+
+Para realizar la predicción de la pregunta 101 de cada usuario, primero se les realiza la transformación respectiva para poder utilizarlos en el modelo.
+
+```{r}
+# Transformación de la base de datos envio
+
+#Se eliminan las variables que no se utilizan
+datos_resp <- subset(respuestas, select = c(country,gp.carrers, gp.previous.experience,difficulty,modality_id,right_answer, scholarity_id, nullified, outdated))
+
+#Cambio de valores vacios por NA
+datos_resp <- datos_resp %>% mutate(country = ifelse(country ==  "" , NA, country))
+datos_resp <- datos_resp %>% mutate(gp.carrers = ifelse(gp.carrers ==  "" , NA, gp.carrers))
+datos_resp <- datos_resp %>% mutate(gp.previous.experience = ifelse(gp.previous.experience ==  "" , NA, gp.previous.experience))
+
+datos_resp <- datos_resp %>% mutate(difficulty = ifelse(difficulty ==  "" , NA, difficulty))
+datos_resp <- datos_resp %>% mutate(modality_id = ifelse(modality_id ==  "" , NA, modality_id))
+datos_resp <- datos_resp %>% mutate(right_answer = ifelse(right_answer ==  "" , NA, right_answer))
+datos_resp <- datos_resp %>% mutate(scholarity_id = ifelse(scholarity_id ==  "" , NA, scholarity_id))
+datos_resp <- datos_resp %>% mutate(nullified = ifelse(nullified ==  "" , NA, nullified))
+datos_resp <- datos_resp %>% mutate(outdated = ifelse(outdated ==  "" , NA, outdated))
+
+#Frecuencia de pais
+datos_resp <- datos_resp[datos_resp$country == "Brazil",]
+datos_resp <- datos_resp[!is.na(datos_resp$country),]
+datos_resp <- subset(datos_resp, select = -c(country))
+
+#Variable gp.carrers
+carreras <-str_split_fixed(datos_resp$gp.carrers, ",", 2)
+carreras <- as.data.frame(carreras)
+datos_resp$gp.carrers <- carreras$V1
+
+datos_resp <- datos_resp %>% mutate(gp.carrers = ifelse(gp.carrers ==  "Exercito" ,"Exército", gp.carrers))
+
+datos_resp <- datos_resp %>% mutate(gp.carrers = ifelse(gp.carrers ==  "" , NA, gp.carrers))
+
+#Variable difficulty
+
+datos_resp$difficulty <- as.factor(datos_resp$difficulty)
+datos_resp <- datos_resp %>% 
+  mutate(difficulty = recode(difficulty,
+                             "1" = "level_1",
+                             "2" = "level_2",
+                             "3" = "level_3",
+                             "4" = "level_4",
+                             "5" = "level_5"))
+
+#Variable modality_id
+
+datos_resp$modality_id <- as.factor(datos_resp$modality_id)
+datos_resp <- datos_resp %>% 
+  mutate(modality_id = recode(modality_id,
+                              "1" = "S_M",
+                              "2" = "V_F"))
+
+#Variable right_answer
+datos_resp <- datos_resp %>% mutate(right_answer = ifelse(right_answer ==  "X" , NA, right_answer))
+datos_resp <- datos_resp %>% mutate(right_answer = ifelse(right_answer ==  "*" , NA, right_answer))
+datos_resp <- datos_resp %>% mutate(right_answer = ifelse(right_answer ==  "+" , NA, right_answer))
+
+#Variable scholarity_id
+datos_resp$scholarity_id <- as.factor(datos_resp$scholarity_id)
+datos_resp <- datos_resp %>% 
+  mutate(scholarity_id = recode(scholarity_id,
+                              "1" = "level_1",
+                              "2" = "level_2",
+                              "3" = "level_3"))
+
+#Variable nullified
+datos_resp$nullified <- as.factor(datos_resp$nullified)
+datos_resp <- datos_resp %>% 
+  mutate(nullified = recode(nullified,
+                              "0" = "No",
+                              "1" = "Yes"))
+
+#Variable outdated
+datos_resp$outdated <- as.factor(datos_resp$outdated)
+datos_resp <- datos_resp %>% 
+  mutate(outdated = recode(outdated,
+                              "0" = "No",
+                              "1" = "Yes"))
+
+datos_resp$gp.carrers <- as.factor(datos_resp$gp.carrers)
+datos_resp$gp.previous.experience <- as.factor(datos_resp$gp.previous.experience)
+datos_resp$difficulty <- as.factor(datos_resp$difficulty)
+datos_resp$modality_id <- as.factor(datos_resp$modality_id)
+datos_resp$right_answer <- as.factor(datos_resp$right_answer)
+datos_resp$scholarity_id <- as.factor(datos_resp$scholarity_id)
+datos_resp$nullified <- as.factor(datos_resp$nullified)
+datos_resp$outdated <- as.factor(datos_resp$outdated)
+
+
+#Valores nulos
+
+#Se elimina las filas donde las variables "modality_id", "scholarity_id", "nullified" y "outdated" son NA al mismo tiempo
+
+datos_resp <- datos_resp[!is.na(datos_resp$modality_id),]
+
+#Sustitucion de NA por moda en gp.carrers, difficulty y gp.previous.experience
+datos_resp$gp.carrers[is.na(datos_resp$gp.carrers)] <- "Policial"
+datos_resp$gp.previous.experience[is.na(datos_resp$gp.previous.experience)] <- "beginner"
+datos_resp$difficulty[is.na(datos_resp$difficulty)] <- "level_2"
+
+#Sustitucion de NA por moda en right_answer
+
+datos_resp$right_answer[(datos_resp$modality_id=="V_F" & is.na(datos_resp$right_answer))] <- "E"
+
+datos_resp$right_answer[(datos_resp$modality_id=="S_M" & is.na(datos_resp$right_answer))] <- "C"
+
+#Conversión de variables categóricas a dummys
+
+onehotencoding <- dummyVars(~.,data = datos_resp)
+datos_resp <- as.data.frame(predict(onehotencoding,datos_resp))
+
+#Se calculan las componentes principales
+
+ACP_resp <- predict(ACP, newdata= datos_resp)
+datos_resp_acp <- data.frame(ACP_resp[,1:11])
+```
+
+Una vez realizada las transformación respectiva, se procede a realizar la predicción. El resultado de esto se puede ver en la Tabla 41. El número de predicciones obtenidas para la respuesta 101 fue para la cantidad de 19.834 usuarios y no 20.000, puesto que desde el inicio se procedió a trabajar con los usuarios que tenían localidad "Brazil", y tampoco se tuvo en cuenta los usuarios que no contaban con la información requerida para el modelo predictivo.
+
+La probabilidad del modelo de predecir correctamente el resultado de acierto a la pregunta 101 "Yes", es de 70,36%, como se observa en la Tabla 41.
+
+```{r}
+pred <- predict(clasificadorBayes, newdata = datos_resp_acp)
+pred <- as.data.frame(pred)
+colnames(pred) <- c("Prediccion")
+
+kable(pred,caption = "Predicción de acierto en la pregunta 101") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 42.** Resultado de las predicciones</center>
+
+<br>
 
 ## 4- Referencias
 
