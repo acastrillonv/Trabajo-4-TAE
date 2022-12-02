@@ -1250,7 +1250,11 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="modelo-predictivo" class="level2">
 <h2 class="anchored" data-anchor-id="modelo-predictivo">3- Modelo predictivo</h2>
-<p>Ya con la limpieza realizada a los datos, se procede con la creación del modelo de predicción. Para realizar el modelo, se escoge el algoritmo KNN (K vecinos más cercanos). Este algoritmo “es un clasificador de aprendizaje supervisado no paramétrico, que utiliza la proximidad para hacer clasificaciones o predicciones sobre la agrupación de un punto de datos individual”(IBM, 2022).</p>
+<p>Ya con la limpieza realizada a los datos, se procede con la creación del modelo de predicción. Para obtener una buena clasificación, vamos a crear diferentes modelos usando diferentes algoritmos y evaluaremos sus resultados para seleccionar el mejor modelo. Los algoritmos que se van a utilizar son:</p>
+<ul>
+<li><p>Regresión logística.</p></li>
+<li><p>Clasificador bayesiano ingenuo.</p></li>
+</ul>
 <section id="transformación-de-la-variable-objetivo" class="level3">
 <h3 class="anchored" data-anchor-id="transformación-de-la-variable-objetivo">3.1- Transformación de la variable objetivo</h3>
 <p>Como paso inicial para la creación del modelo, se transforma la variable objetivo “Acertou” la cual tiene valores 0 y 1, a valores “No” o “Yes” respectivamente.</p>
@@ -1328,372 +1332,685 @@ ul.task-list li input[type="checkbox"] {
 
 </div>
 </section>
-<section id="a.c.p-análisis-de-las-componentes-principales" class="level3">
-<h3 class="anchored" data-anchor-id="a.c.p-análisis-de-las-componentes-principales">3.3- A.C.P (Análisis de las componentes principales)</h3>
-<p>Se realiza un Análisis de Componentes Principales para la selección de las variables, el cual se puede ver en la Tabla 26. Para conservar el 91.42% de la variabilidad explicada en las variables, se va a trabajar con las primeras 11 componentes principales.</p>
+<section id="modelo-usando-regresión-logística." class="level3">
+<h3 class="anchored" data-anchor-id="modelo-usando-regresión-logística.">3.3- Modelo usando regresión logística.</h3>
+<p>La regresión logística es “un método de regresión que permite estimar la probabilidad de una variable cualitativa binaria en función de una variable cuantitativa” (Amat, 2016).</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Table continues below</caption>
 <colgroup>
-<col style="width: 37%">
-<col style="width: 11%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 63%">
+<col style="width: 18%">
+<col style="width: 18%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: center;">&nbsp;</th>
-<th style="text-align: center;">PC1</th>
-<th style="text-align: center;">PC2</th>
-<th style="text-align: center;">PC3</th>
-<th style="text-align: center;">PC4</th>
-<th style="text-align: center;">PC5</th>
+<th style="text-align: center;">Estimate</th>
+<th style="text-align: center;">Std. Error</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><strong>Standard deviation</strong></td>
-<td style="text-align: center;">2.135</td>
-<td style="text-align: center;">0.705</td>
-<td style="text-align: center;">0.6635</td>
-<td style="text-align: center;">0.5902</td>
-<td style="text-align: center;">0.5338</td>
+<td style="text-align: center;"><strong>(Intercept)</strong></td>
+<td style="text-align: center;">2.854e+09</td>
+<td style="text-align: center;">3.624e+09</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><strong>Proportion of Variance</strong></td>
-<td style="text-align: center;">0.5696</td>
-<td style="text-align: center;">0.06213</td>
-<td style="text-align: center;">0.05503</td>
-<td style="text-align: center;">0.04354</td>
-<td style="text-align: center;">0.03562</td>
+<td style="text-align: center;"><strong>gp.carrers.Administrativa</strong></td>
+<td style="text-align: center;">-0.1058</td>
+<td style="text-align: center;">0.008413</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><strong>Cumulative Proportion</strong></td>
-<td style="text-align: center;">0.5696</td>
-<td style="text-align: center;">0.6318</td>
-<td style="text-align: center;">0.6868</td>
-<td style="text-align: center;">0.7303</td>
-<td style="text-align: center;">0.766</td>
-</tr>
-</tbody>
-</table>
-<table class="table table-sm table-striped">
-<caption>Table continues below</caption>
-<colgroup>
-<col style="width: 36%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">&nbsp;</th>
-<th style="text-align: center;">PC6</th>
-<th style="text-align: center;">PC7</th>
-<th style="text-align: center;">PC8</th>
-<th style="text-align: center;">PC9</th>
-<th style="text-align: center;">PC10</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Standard deviation</strong></td>
-<td style="text-align: center;">0.5137</td>
-<td style="text-align: center;">0.4836</td>
-<td style="text-align: center;">0.4723</td>
-<td style="text-align: center;">0.4001</td>
-<td style="text-align: center;">0.3986</td>
+<td style="text-align: center;"><strong>gp.carrers.Aeronáutica</strong></td>
+<td style="text-align: center;">-0.05542</td>
+<td style="text-align: center;">0.02793</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><strong>Proportion of Variance</strong></td>
+<td style="text-align: center;"><strong>gp.carrers.Bancária</strong></td>
+<td style="text-align: center;">-0.1092</td>
+<td style="text-align: center;">0.01536</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong><code>gp.carrers.Controle e Gestão</code></strong></td>
+<td style="text-align: center;">0.05262</td>
+<td style="text-align: center;">0.02566</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Educação</strong></td>
+<td style="text-align: center;">0.01809</td>
+<td style="text-align: center;">0.01008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.carrers.Exército</strong></td>
+<td style="text-align: center;">-0.07155</td>
+<td style="text-align: center;">0.021</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Fiscal</strong></td>
+<td style="text-align: center;">-0.02347</td>
+<td style="text-align: center;">0.006992</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.carrers.Jurídica</strong></td>
+<td style="text-align: center;">0.07101</td>
+<td style="text-align: center;">0.007204</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Legislativa</strong></td>
+<td style="text-align: center;">0.03211</td>
+<td style="text-align: center;">0.01663</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.carrers.Marinha</strong></td>
+<td style="text-align: center;">-0.0786</td>
+<td style="text-align: center;">0.02706</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Outras</strong></td>
+<td style="text-align: center;">-0.09888</td>
+<td style="text-align: center;">0.007724</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.carrers.Policial</strong></td>
+<td style="text-align: center;">-0.2298</td>
+<td style="text-align: center;">0.005092</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Saúde</strong></td>
+<td style="text-align: center;">0.01421</td>
+<td style="text-align: center;">0.009666</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.previous.experience.beginner</strong></td>
+<td style="text-align: center;">-0.1917</td>
+<td style="text-align: center;">0.00861</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.previous.experience.experient</strong></td>
+<td style="text-align: center;">-0.1755</td>
+<td style="text-align: center;">0.009661</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.previous.experience.highly_experient</strong></td>
+<td style="text-align: center;">-0.1857</td>
+<td style="text-align: center;">0.01528</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>difficulty.level_1</strong></td>
+<td style="text-align: center;">-2.854e+09</td>
+<td style="text-align: center;">3.624e+09</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>difficulty.level_2</strong></td>
+<td style="text-align: center;">-2.854e+09</td>
+<td style="text-align: center;">3.624e+09</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>difficulty.level_3</strong></td>
+<td style="text-align: center;">-2.854e+09</td>
+<td style="text-align: center;">3.624e+09</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>difficulty.level_4</strong></td>
+<td style="text-align: center;">-2.854e+09</td>
+<td style="text-align: center;">3.624e+09</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>difficulty.level_5</strong></td>
+<td style="text-align: center;">-2.854e+09</td>
+<td style="text-align: center;">3.624e+09</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>modality_id.S_M</strong></td>
+<td style="text-align: center;">-0.1192</td>
+<td style="text-align: center;">0.005189</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>right_answer.A</strong></td>
+<td style="text-align: center;">0.06602</td>
+<td style="text-align: center;">0.006252</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>right_answer.B</strong></td>
+<td style="text-align: center;">0.05113</td>
+<td style="text-align: center;">0.006215</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>right_answer.C</strong></td>
+<td style="text-align: center;">0.07564</td>
+<td style="text-align: center;">0.005024</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>right_answer.D</strong></td>
+<td style="text-align: center;">0.06211</td>
+<td style="text-align: center;">0.006198</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>scholarity_id.level_1</strong></td>
+<td style="text-align: center;">0.168</td>
+<td style="text-align: center;">0.01305</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>scholarity_id.level_2</strong></td>
+<td style="text-align: center;">0.03509</td>
+<td style="text-align: center;">0.00391</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>nullified.No</strong></td>
+<td style="text-align: center;">0.03712</td>
 <td style="text-align: center;">0.03299</td>
-<td style="text-align: center;">0.02924</td>
-<td style="text-align: center;">0.02788</td>
-<td style="text-align: center;">0.02001</td>
-<td style="text-align: center;">0.01986</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><strong>Cumulative Proportion</strong></td>
-<td style="text-align: center;">0.7989</td>
-<td style="text-align: center;">0.8282</td>
-<td style="text-align: center;">0.856</td>
-<td style="text-align: center;">0.8761</td>
-<td style="text-align: center;">0.8959</td>
-</tr>
-</tbody>
-</table>
-<table class="table table-sm table-striped">
-<caption>Table continues below</caption>
-<colgroup>
-<col style="width: 36%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">&nbsp;</th>
-<th style="text-align: center;">PC11</th>
-<th style="text-align: center;">PC12</th>
-<th style="text-align: center;">PC13</th>
-<th style="text-align: center;">PC14</th>
-<th style="text-align: center;">PC15</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Standard deviation</strong></td>
-<td style="text-align: center;">0.3818</td>
-<td style="text-align: center;">0.331</td>
-<td style="text-align: center;">0.3085</td>
-<td style="text-align: center;">0.2811</td>
-<td style="text-align: center;">0.2525</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>Proportion of Variance</strong></td>
-<td style="text-align: center;">0.01822</td>
-<td style="text-align: center;">0.01369</td>
-<td style="text-align: center;">0.01189</td>
-<td style="text-align: center;">0.00987</td>
-<td style="text-align: center;">0.00797</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><strong>Cumulative Proportion</strong></td>
-<td style="text-align: center;">0.9142</td>
-<td style="text-align: center;">0.9278</td>
-<td style="text-align: center;">0.9397</td>
-<td style="text-align: center;">0.9496</td>
-<td style="text-align: center;">0.9576</td>
-</tr>
-</tbody>
-</table>
-<table class="table table-sm table-striped">
-<caption>Table continues below</caption>
-<colgroup>
-<col style="width: 37%">
-<col style="width: 11%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">&nbsp;</th>
-<th style="text-align: center;">PC16</th>
-<th style="text-align: center;">PC17</th>
-<th style="text-align: center;">PC18</th>
-<th style="text-align: center;">PC19</th>
-<th style="text-align: center;">PC20</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Standard deviation</strong></td>
-<td style="text-align: center;">0.2514</td>
-<td style="text-align: center;">0.2305</td>
-<td style="text-align: center;">0.2125</td>
-<td style="text-align: center;">0.197</td>
-<td style="text-align: center;">0.1806</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>Proportion of Variance</strong></td>
-<td style="text-align: center;">0.0079</td>
-<td style="text-align: center;">0.00664</td>
-<td style="text-align: center;">0.00565</td>
-<td style="text-align: center;">0.00485</td>
-<td style="text-align: center;">0.00408</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><strong>Cumulative Proportion</strong></td>
-<td style="text-align: center;">0.9655</td>
-<td style="text-align: center;">0.9721</td>
-<td style="text-align: center;">0.9778</td>
-<td style="text-align: center;">0.9826</td>
-<td style="text-align: center;">0.9867</td>
-</tr>
-</tbody>
-</table>
-<table class="table table-sm table-striped">
-<caption>Table continues below</caption>
-<colgroup>
-<col style="width: 36%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">&nbsp;</th>
-<th style="text-align: center;">PC21</th>
-<th style="text-align: center;">PC22</th>
-<th style="text-align: center;">PC23</th>
-<th style="text-align: center;">PC24</th>
-<th style="text-align: center;">PC25</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Standard deviation</strong></td>
-<td style="text-align: center;">0.1663</td>
-<td style="text-align: center;">0.1508</td>
-<td style="text-align: center;">0.1278</td>
-<td style="text-align: center;">0.1139</td>
-<td style="text-align: center;">0.0876</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>Proportion of Variance</strong></td>
-<td style="text-align: center;">0.00346</td>
-<td style="text-align: center;">0.00284</td>
-<td style="text-align: center;">0.00204</td>
-<td style="text-align: center;">0.00162</td>
-<td style="text-align: center;">0.00096</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><strong>Cumulative Proportion</strong></td>
-<td style="text-align: center;">0.9901</td>
-<td style="text-align: center;">0.993</td>
-<td style="text-align: center;">0.995</td>
-<td style="text-align: center;">0.9967</td>
-<td style="text-align: center;">0.9976</td>
-</tr>
-</tbody>
-</table>
-<table class="table table-sm table-striped">
-<caption>Table continues below</caption>
-<colgroup>
-<col style="width: 37%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 11%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">&nbsp;</th>
-<th style="text-align: center;">PC26</th>
-<th style="text-align: center;">PC27</th>
-<th style="text-align: center;">PC28</th>
-<th style="text-align: center;">PC29</th>
-<th style="text-align: center;">PC30</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Standard deviation</strong></td>
-<td style="text-align: center;">0.07498</td>
-<td style="text-align: center;">0.0668</td>
-<td style="text-align: center;">0.06523</td>
-<td style="text-align: center;">0.0633</td>
-<td style="text-align: center;">0.02741</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>Proportion of Variance</strong></td>
-<td style="text-align: center;">7e-04</td>
-<td style="text-align: center;">0.00056</td>
-<td style="text-align: center;">0.00053</td>
-<td style="text-align: center;">5e-04</td>
-<td style="text-align: center;">9e-05</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><strong>Cumulative Proportion</strong></td>
-<td style="text-align: center;">0.9983</td>
-<td style="text-align: center;">0.9989</td>
-<td style="text-align: center;">0.9994</td>
-<td style="text-align: center;">0.9999</td>
-<td style="text-align: center;">1</td>
-</tr>
-</tbody>
-</table>
-<table class="table table-sm table-striped">
-<caption>Table continues below</caption>
-<colgroup>
-<col style="width: 37%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">&nbsp;</th>
-<th style="text-align: center;">PC31</th>
-<th style="text-align: center;">PC32</th>
-<th style="text-align: center;">PC33</th>
-<th style="text-align: center;">PC34</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong>Standard deviation</strong></td>
-<td style="text-align: center;">9.526e-12</td>
-<td style="text-align: center;">2.986e-12</td>
-<td style="text-align: center;">1.718e-12</td>
-<td style="text-align: center;">1.504e-12</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong>Proportion of Variance</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><strong>Cumulative Proportion</strong></td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;"><strong>outdated.No</strong></td>
+<td style="text-align: center;">0.05492</td>
+<td style="text-align: center;">0.01292</td>
 </tr>
 </tbody>
 </table>
 <table class="table table-sm table-striped">
 <colgroup>
-<col style="width: 40%">
-<col style="width: 15%">
-<col style="width: 16%">
-<col style="width: 16%">
+<col style="width: 63%">
+<col style="width: 13%">
+<col style="width: 18%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: center;">&nbsp;</th>
-<th style="text-align: center;">PC35</th>
-<th style="text-align: center;">PC36</th>
-<th style="text-align: center;">PC37</th>
+<th style="text-align: center;">z value</th>
+<th style="text-align: center;">Pr(&gt;|z|)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><strong>Standard deviation</strong></td>
-<td style="text-align: center;">9.86e-13</td>
-<td style="text-align: center;">2.864e-13</td>
-<td style="text-align: center;">1.27e-13</td>
+<td style="text-align: center;"><strong>(Intercept)</strong></td>
+<td style="text-align: center;">0.7876</td>
+<td style="text-align: center;">0.4309</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><strong>Proportion of Variance</strong></td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
+<td style="text-align: center;"><strong>gp.carrers.Administrativa</strong></td>
+<td style="text-align: center;">-12.57</td>
+<td style="text-align: center;">3.018e-36</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><strong>Cumulative Proportion</strong></td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;"><strong>gp.carrers.Aeronáutica</strong></td>
+<td style="text-align: center;">-1.984</td>
+<td style="text-align: center;">0.04722</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Bancária</strong></td>
+<td style="text-align: center;">-7.11</td>
+<td style="text-align: center;">1.157e-12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong><code>gp.carrers.Controle e Gestão</code></strong></td>
+<td style="text-align: center;">2.05</td>
+<td style="text-align: center;">0.04033</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Educação</strong></td>
+<td style="text-align: center;">1.795</td>
+<td style="text-align: center;">0.07271</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.carrers.Exército</strong></td>
+<td style="text-align: center;">-3.407</td>
+<td style="text-align: center;">0.0006576</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Fiscal</strong></td>
+<td style="text-align: center;">-3.357</td>
+<td style="text-align: center;">0.0007883</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.carrers.Jurídica</strong></td>
+<td style="text-align: center;">9.857</td>
+<td style="text-align: center;">6.38e-23</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Legislativa</strong></td>
+<td style="text-align: center;">1.931</td>
+<td style="text-align: center;">0.0535</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.carrers.Marinha</strong></td>
+<td style="text-align: center;">-2.904</td>
+<td style="text-align: center;">0.003681</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Outras</strong></td>
+<td style="text-align: center;">-12.8</td>
+<td style="text-align: center;">1.621e-37</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.carrers.Policial</strong></td>
+<td style="text-align: center;">-45.14</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.carrers.Saúde</strong></td>
+<td style="text-align: center;">1.47</td>
+<td style="text-align: center;">0.1415</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.previous.experience.beginner</strong></td>
+<td style="text-align: center;">-22.26</td>
+<td style="text-align: center;">8.889e-110</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>gp.previous.experience.experient</strong></td>
+<td style="text-align: center;">-18.16</td>
+<td style="text-align: center;">1.064e-73</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>gp.previous.experience.highly_experient</strong></td>
+<td style="text-align: center;">-12.15</td>
+<td style="text-align: center;">5.792e-34</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>difficulty.level_1</strong></td>
+<td style="text-align: center;">-0.7876</td>
+<td style="text-align: center;">0.4309</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>difficulty.level_2</strong></td>
+<td style="text-align: center;">-0.7876</td>
+<td style="text-align: center;">0.4309</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>difficulty.level_3</strong></td>
+<td style="text-align: center;">-0.7876</td>
+<td style="text-align: center;">0.4309</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>difficulty.level_4</strong></td>
+<td style="text-align: center;">-0.7876</td>
+<td style="text-align: center;">0.4309</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>difficulty.level_5</strong></td>
+<td style="text-align: center;">-0.7876</td>
+<td style="text-align: center;">0.4309</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>modality_id.S_M</strong></td>
+<td style="text-align: center;">-22.98</td>
+<td style="text-align: center;">8.137e-117</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>right_answer.A</strong></td>
+<td style="text-align: center;">10.56</td>
+<td style="text-align: center;">4.563e-26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>right_answer.B</strong></td>
+<td style="text-align: center;">8.227</td>
+<td style="text-align: center;">1.913e-16</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>right_answer.C</strong></td>
+<td style="text-align: center;">15.06</td>
+<td style="text-align: center;">3.2e-51</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>right_answer.D</strong></td>
+<td style="text-align: center;">10.02</td>
+<td style="text-align: center;">1.226e-23</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>scholarity_id.level_1</strong></td>
+<td style="text-align: center;">12.88</td>
+<td style="text-align: center;">5.883e-38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>scholarity_id.level_2</strong></td>
+<td style="text-align: center;">8.974</td>
+<td style="text-align: center;">2.857e-19</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>nullified.No</strong></td>
+<td style="text-align: center;">1.125</td>
+<td style="text-align: center;">0.2605</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>outdated.No</strong></td>
+<td style="text-align: center;">4.252</td>
+<td style="text-align: center;">2.117e-05</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+<center>
+<strong>Tabla 26.</strong> Resumen estadístico del modelo usando regresión logística
+</center>
+<p><br></p>
+<p>Para la creación del modelo, usaremos los datos de entrenamiento. Una vez entrenado el modelo. Podemos observar en la Tabla 26 el resumen del modelo. En este resumen se obtiene el <strong>p-value</strong> <strong>(Pr(&gt;|z|)</strong>, el cual representa la relevancia estadística que tiene cada una de las variables como elemento predictivo.</p>
+<p>Usando un nivel de significancia alpha = 0.05, identificamos que las variables “difficulty.level_1”, “difficulty.level_2”, “difficulty.level_3”, “difficulty.level_4” y “difficulty.level_5” no tienen importancia para el modelo. Se vuelve a crear el modelo eliminando las variables anteriores.</p>
+<div class="cell">
+
+</div>
+<p>Ya con el modelo creado y entrenado, se realiza la predicción usando los valores de entrenamiento para analizar el comportamiento del modelo. Al momento de realizar las predicciones, se obtienen los valores de probabilidad de ocurriencia de cada clase. A continuación, se analiza el valor del umbral para identificar cuando una un registro se clasifica como “Yes” o “No”. Este umbral indica: si la probabilidad es menor o igual al umbral, se clasifica como “No”, en caso contrario, se clasifica como “Si”.</p>
+<section id="umbral-0.5" class="level4">
+<h4 class="anchored" data-anchor-id="umbral-0.5">3.3.1- Umbral = 0.5</h4>
+<p>Al utilizar un umbral igual a 0.5, se puede observar el comportamiento del modelo en la tabla de confusión que se obtiene en la Tabla 27.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Matriz de confusión</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> No </th>
+   <th style="text-align:right;"> Yes </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 914 </td>
+   <td style="text-align:right;"> 547790 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 838 </td>
+   <td style="text-align:right;"> 1037196 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 27.</strong> Matriz de confusión de las predecciones obtenidas utilizando los datos de entrenamiento con umbral = 0.5
+</center>
+<p><br> En la Tabla 27 podemos observar que se tiene un total de 1.038.110 predicciones correctas y 548.628, lo que equivale a una precisión de predicción de 65,42% correcta y de 34,58% incorrecta.</p>
+<p>En la Tabla 28, se puede observar el valor obtenido utilizando las métricas de precisión, sensibilidad y especificidad.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valor de las métricas</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> precision </th>
+   <th style="text-align:right;"> sensibilidad </th>
+   <th style="text-align:right;"> especificidad </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0.6542416 </td>
+   <td style="text-align:right;"> 0.6543881 </td>
+   <td style="text-align:right;"> 0.5216895 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 28.</strong> Métricas del modelo utilizando un umbral = 0.5
+</center>
+<p><br></p>
+</section>
+<section id="umbral-0.4" class="level4">
+<h4 class="anchored" data-anchor-id="umbral-0.4">3.3.3- Umbral = 0.4</h4>
+<p>Al utilizar un umbral igual a 0.4, se puede observar el comportamiento del modelo en la tabla de confusión que se obtiene en la Tabla 29.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Matriz de confusión</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> No </th>
+   <th style="text-align:right;"> Yes </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 548691 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 1038025 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 29.</strong> Matriz de confusión de las predecciones obtenidas utilizando los datos de entrenamiento con umbral = 0.4
+</center>
+<p><br></p>
+<p>En la Tabla 29 podemos observar que se tiene un total de 1.038.038 predicciones correctas y 548.700, lo que equivale a una precisión de predicción de 65,42% correcta y de 34,58% incorrecta.</p>
+<p>En la Tabla 30, se puede observar el valor obtenido utilizando las métricas de precisión, sensibilidad y especificidad.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valor de las métricas</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> precision </th>
+   <th style="text-align:right;"> sensibilidad </th>
+   <th style="text-align:right;"> especificidad </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0.6541962 </td>
+   <td style="text-align:right;"> 0.6541971 </td>
+   <td style="text-align:right;"> 0.5909091 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 30.</strong> Métricas del modelo utilizando un umbral = 0.4
+</center>
+<p><br></p>
+</section>
+<section id="umbral-0.6" class="level4">
+<h4 class="anchored" data-anchor-id="umbral-0.6">3.3.3- Umbral = 0.6</h4>
+<p>Al utilizar un umbral igual a 0.6, se puede observar el comportamiento del modelo en la tabla de confusión que se obtiene en la Tabla 31.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Matriz de confusión</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> No </th>
+   <th style="text-align:right;"> Yes </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 117753 </td>
+   <td style="text-align:right;"> 430951 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 164610 </td>
+   <td style="text-align:right;"> 873424 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 31.</strong> Matriz de confusión de las predecciones obtenidas utilizando los datos de entrenamiento con umbral = 0.6
+</center>
+<p><br></p>
+<p>En la Tabla 31 podemos observar que se tiene un total de 991.177 predicciones correctas y 595.561, lo que equivale a una precisión de predicción de 62,46% correcta y de 37,54% incorrecta.</p>
+<p>En la Tabla 32, se puede observar el valor obtenido utilizando las métricas de precisión, sensibilidad y especificidad.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valor de las métricas</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> precision </th>
+   <th style="text-align:right;"> sensibilidad </th>
+   <th style="text-align:right;"> especificidad </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0.6246633 </td>
+   <td style="text-align:right;"> 0.6696111 </td>
+   <td style="text-align:right;"> 0.417027 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 32.</strong> Métricas del modelo utilizando un umbral = 0.6
+</center>
+<p><br></p>
+</section>
+<section id="análisis-del-modelo-usando-las-métricas-obtenidas-por-cada-variación-del-umbral" class="level4">
+<h4 class="anchored" data-anchor-id="análisis-del-modelo-usando-las-métricas-obtenidas-por-cada-variación-del-umbral">3.3.4- Análisis del modelo usando las métricas obtenidas por cada variación del umbral</h4>
+<p>Una vez calculado las métricas de precisión, sensibilidad y especificidad para el modelo cambiando el valor del umbral, se obtiene la Tabla 33.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valor de las métricas</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> precision </th>
+   <th style="text-align:right;"> sensibilidad </th>
+   <th style="text-align:right;"> especificidad </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Umbral 0.5 </td>
+   <td style="text-align:right;"> 0.6542416 </td>
+   <td style="text-align:right;"> 0.6543881 </td>
+   <td style="text-align:right;"> 0.5216895 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Umbral 0.4 </td>
+   <td style="text-align:right;"> 0.6541962 </td>
+   <td style="text-align:right;"> 0.6541971 </td>
+   <td style="text-align:right;"> 0.5909091 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Umbral 0.6 </td>
+   <td style="text-align:right;"> 0.6246633 </td>
+   <td style="text-align:right;"> 0.6696111 </td>
+   <td style="text-align:right;"> 0.4170270 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 33.</strong> Métricas del modelo utilizando un umbral igual a 0.4, 0.5 y 0.6
+</center>
+<p><br></p>
+<p>En la Tabla 33, observamos que:</p>
+<ul>
+<li><p>El mejor valor para la presión (capacidad de predección correcta) se obtuvo utilizando un umbral de 0.5.</p></li>
+<li><p>El mejor valor para la sensibilidad (capacidad de predecir verdaderos positivos) se obtuvo utilizando un umbral de 0.6.</p></li>
+<li><p>El mejor valor para la especificidad (capacidad de predecir verdaderos negativos) se obtuvo utilizando un umbral de 0.4.</p></li>
+</ul>
+<p>El interés de este trabajo es crear un modelo que sea bueno prediciendo el valor “Yes”, ya que se busca predecir la probabildad de que un estudiante determinado responda correctamente la siguiente pregunta. Por lo anterior se escoge el umbral 0.6.</p>
+</section>
+<section id="análisis-del-modelo-utilizando-los-datos-de-validación" class="level4">
+<h4 class="anchored" data-anchor-id="análisis-del-modelo-utilizando-los-datos-de-validación">3.3.5- Análisis del modelo utilizando los datos de validación</h4>
+<p>Ya definido el modelo, se realizan validaciones utilizando el conjunto de validación.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Matriz de confusión</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> No </th>
+   <th style="text-align:right;"> Yes </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 29559 </td>
+   <td style="text-align:right;"> 107550 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 41003 </td>
+   <td style="text-align:right;"> 218572 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 34.</strong> Matriz de confusión de las predecciones obtenidas utilizando los datos de validación
+</center>
+<p>En la Tabla 34, podemos observar que</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table lightable-minimal" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>Valor de las métricas</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> precision </th>
+   <th style="text-align:right;"> sensibilidad </th>
+   <th style="text-align:right;"> especificidad </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0.625513 </td>
+   <td style="text-align:right;"> 0.6702154 </td>
+   <td style="text-align:right;"> 0.4189082 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<center>
+<strong>Tabla 35.</strong> Métricas del modelo utilizando el conjunto de datos de validación
+</center>
+<p><br> En la Tabla 35,</p>
+</section>
+<section id="predicción-de-la-pregunta-101-de-cada-usuario" class="level4">
+<h4 class="anchored" data-anchor-id="predicción-de-la-pregunta-101-de-cada-usuario">3.3.6- Predicción de la pregunta 101 de cada usuario</h4>
+<p>afff</p>
+</section>
+</section>
+<section id="a.c.p-análisis-de-las-componentes-principales" class="level3">
+<h3 class="anchored" data-anchor-id="a.c.p-análisis-de-las-componentes-principales">3.3- A.C.P (Análisis de las componentes principales)</h3>
+<p>Se realiza un Análisis de Componentes Principales para la selección de las variables, el cual se puede ver en la Tabla 26. Para conservar el 91.42% de la variabilidad explicada en las variables, se va a trabajar con las primeras 11 componentes principales.</p>
+<div class="cell">
+
 </div>
 <center>
 <strong>Tabla 26.</strong> Análisis de Componentes Principales
@@ -1712,12 +2029,15 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 
 </div>
+<div class="cell">
+
+</div>
 </section>
 </section>
 <section id="referencias" class="level2">
 <h2 class="anchored" data-anchor-id="referencias">Referencias</h2>
 <ul>
-<li>IBM. (2022). Algoritmo de k vecinos más cercanos. 2022, noviembre 24, de ibm.com. Sitio web: https://www.ibm.com/co-es/topics/knn</li>
+<li>Amat, J.. (2016). Regresión logística simple y múltiple. 2022, noviembre 30, de Rpubs. Sitio web: https://rpubs.com/Joaquin_AR/229736</li>
 </ul>
 </section>
 

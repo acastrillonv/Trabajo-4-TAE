@@ -519,7 +519,11 @@ kable(size,caption = "Tamaño del dataset") %>%
 
 ## 3- Modelo predictivo
 
-Ya con la limpieza realizada a los datos, se procede con la creación del modelo de predicción. Para realizar el modelo, se escoge el algoritmo KNN (K vecinos más cercanos). Este algoritmo "es un clasificador de aprendizaje supervisado no paramétrico, que utiliza la proximidad para hacer clasificaciones o predicciones sobre la agrupación de un punto de datos individual"(IBM, 2022).
+Ya con la limpieza realizada a los datos, se procede con la creación del modelo de predicción. Para obtener una buena clasificación, vamos a crear diferentes modelos usando diferentes algoritmos y evaluaremos sus resultados para seleccionar el mejor modelo. Los algoritmos que se van a utilizar son:
+
+-   Regresión logística.
+
+-   Clasificador bayesiano ingenuo.
 
 ### 3.1- Transformación de la variable objetivo
 
@@ -582,9 +586,261 @@ Y_vl <- datos_vl$Acertou
 Y_vl <- as.factor(Y_vl)
 ```
 
-### 3.3- A.C.P (Análisis de las componentes principales)
+### 3.3- Modelo usando regresión logística.
 
-Se realiza un Análisis de Componentes Principales para la selección de las variables, el cual se puede ver en la Tabla 26. Para conservar el 91.42% de la variabilidad explicada en las variables, se va a trabajar con las primeras 11 componentes principales.
+La regresión logística es "un método de regresión que permite estimar la probabilidad de una variable cualitativa binaria en función de una variable cuantitativa" (Amat, 2016).
+
+Para la creación del modelo, usaremos los datos de entrenamiento. Una vez entrenado el modelo. Podemos observar en la Tabla 26 el resumen del modelo. En este resumen se obtiene el **p-value** **(Pr(\>\|z\|)**, el cual representa la relevancia estadística que tiene cada una de las variables como elemento predictivo.
+
+Usando un nivel de significancia alpha = 0.05, identificamos que las variables "difficulty.level_1", "difficulty.level_2", "difficulty.level_3", "difficulty.level_4" y "difficulty.level_5" no tienen importancia para el modelo. Se vuelve a crear el modelo eliminando las variables anteriores.
+
+```{r}
+#Clasificador usando regresión logística
+datos_entrenamiento <-datos_tr
+
+clasificadorRL <- glm(Acertou ~ ., family = binomial, data = datos_entrenamiento)
+
+p <- summary(clasificadorRL)
+
+pander(p[["coefficients"]])
+```
+
+<center>**Tabla 26.** Resumen estadístico del modelo usando regresión logística</center>
+
+<br>
+
+```{r}
+datos_entrenamiento = subset(datos_entrenamiento, select = -c(difficulty.level_1, difficulty.level_2, difficulty.level_3, difficulty.level_4, difficulty.level_5))
+
+#Clasificador usando regresión logística
+clasificadorRL <- glm(Acertou ~ ., family = binomial, data = datos_entrenamiento)
+```
+
+Ya con el modelo creado y entrenado, se realiza la predicción usando los valores de entrenamiento para analizar el comportamiento del modelo. Al momento de realizar las predicciones, se obtienen los valores de probabilidad de ocurriencia de cada clase. A continuación, se analiza el valor del umbral para identificar cuando una un registro se clasifica como "Yes" o "No". Este umbral indica: si la probabilidad es menor o igual al umbral, se clasifica como "No", en caso contrario, se clasifica como "Si".
+
+#### 3.3.1- Umbral = 0.5
+
+Al utilizar un umbral igual a 0.5, se puede observar el comportamiento del modelo en la tabla de confusión que se obtiene en la Tabla 27.
+
+```{r}
+
+#Predición usando los datos de entrenamiento
+pred_train <- predict(clasificadorRL, type = 'response', ndata = datos_entrenamiento)
+pred_train <- ifelse(pred_train > 0.5, 1, 0)
+pred_train <- factor(pred_train, levels = c("0", "1"), labels = c("No", "Yes"))
+
+#Matriz de confusión
+matrizConfusion <- table(datos_entrenamiento$Acertou, pred_train)
+
+kable(matrizConfusion,caption = "Matriz de confusión") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 27.** Matriz de confusión de las predecciones obtenidas utilizando los datos de entrenamiento con umbral = 0.5</center>
+
+<br> En la Tabla 27 podemos observar que se tiene un total de 1.038.110 predicciones correctas y 548.628, lo que equivale a una precisión de predicción de 65,42% correcta y de 34,58% incorrecta.
+
+En la Tabla 28, se puede observar el valor obtenido utilizando las métricas de precisión, sensibilidad y especificidad.
+
+```{r}
+#Calculo de las metricas
+
+precision <- sum(diag(matrizConfusion))/sum(matrizConfusion)
+sensibilidad <- matrizConfusion[2,2]/(matrizConfusion[2,2]+matrizConfusion[1,2])
+especificidad <-    matrizConfusion[1,1]/(matrizConfusion[1,1]+matrizConfusion[2,1])
+
+metricas1 <- list(precision=precision,
+                 sensibilidad=sensibilidad,
+                 especificidad=especificidad)
+metricas1 <- as.data.frame(metricas1)
+
+kable(metricas1,caption = "Valor de las métricas") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 28.** Métricas del modelo utilizando un umbral = 0.5</center>
+
+<br>
+
+#### 3.3.3- Umbral = 0.4
+
+Al utilizar un umbral igual a 0.4, se puede observar el comportamiento del modelo en la tabla de confusión que se obtiene en la Tabla 29.
+
+```{r}
+#Predición usando los datos de entrenamiento
+pred_train <- predict(clasificadorRL, type = 'response', ndata = datos_entrenamiento)
+pred_train <- ifelse(pred_train > 0.4, 1, 0)
+pred_train <- factor(pred_train, levels = c("0", "1"), labels = c("No", "Yes"))
+
+#Matriz de confusión
+matrizConfusion <- table(datos_entrenamiento$Acertou, pred_train)
+
+kable(matrizConfusion,caption = "Matriz de confusión") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+
+#matrizConfusion
+```
+
+<center>**Tabla 29.** Matriz de confusión de las predecciones obtenidas utilizando los datos de entrenamiento con umbral = 0.4</center>
+
+<br>
+
+En la Tabla 29 podemos observar que se tiene un total de 1.038.038 predicciones correctas y 548.700, lo que equivale a una precisión de predicción de 65,42% correcta y de 34,58% incorrecta.
+
+En la Tabla 30, se puede observar el valor obtenido utilizando las métricas de precisión, sensibilidad y especificidad.
+
+```{r}
+#Calculo de las metricas
+precision <- sum(diag(matrizConfusion))/sum(matrizConfusion)
+sensibilidad <- matrizConfusion[2,2]/(matrizConfusion[2,2]+matrizConfusion[1,2])
+especificidad <-    matrizConfusion[1,1]/(matrizConfusion[1,1]+matrizConfusion[2,1])
+
+metricas2 <- list(precision=precision,
+                 sensibilidad=sensibilidad,
+                 especificidad=especificidad)
+metricas2 <- as.data.frame(metricas2)
+
+kable(metricas2,caption = "Valor de las métricas") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 30.** Métricas del modelo utilizando un umbral = 0.4</center>
+
+<br>
+
+#### 3.3.3- Umbral = 0.6
+
+Al utilizar un umbral igual a 0.6, se puede observar el comportamiento del modelo en la tabla de confusión que se obtiene en la Tabla 31.
+
+```{r}
+#Predición usando los datos de entrenamiento
+pred_train <- predict(clasificadorRL, type = 'response', ndata = datos_entrenamiento)
+pred_train <- ifelse(pred_train > 0.6, 1, 0)
+pred_train <- factor(pred_train, levels = c("0", "1"), labels = c("No", "Yes"))
+
+#Matriz de confusión
+matrizConfusion <- table(datos_entrenamiento$Acertou, pred_train)
+
+kable(matrizConfusion,caption = "Matriz de confusión") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+
+#matrizConfusion
+```
+
+<center>**Tabla 31.** Matriz de confusión de las predecciones obtenidas utilizando los datos de entrenamiento con umbral = 0.6</center>
+
+<br>
+
+En la Tabla 31 podemos observar que se tiene un total de 991.177 predicciones correctas y 595.561, lo que equivale a una precisión de predicción de 62,46% correcta y de 37,54% incorrecta.
+
+En la Tabla 32, se puede observar el valor obtenido utilizando las métricas de precisión, sensibilidad y especificidad.
+
+```{r}
+#Calculo de las metricas
+precision <- sum(diag(matrizConfusion))/sum(matrizConfusion)
+sensibilidad <- matrizConfusion[2,2]/(matrizConfusion[2,2]+matrizConfusion[1,2])
+especificidad <-    matrizConfusion[1,1]/(matrizConfusion[1,1]+matrizConfusion[2,1])
+
+metricas3 <- list(precision=precision,
+                 sensibilidad=sensibilidad,
+                 especificidad=especificidad)
+metricas3 <- as.data.frame(metricas3)
+
+kable(metricas3,caption = "Valor de las métricas") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 32.** Métricas del modelo utilizando un umbral = 0.6</center>
+
+<br>
+
+#### 3.3.4- Análisis del modelo usando las métricas obtenidas por cada variación del umbral
+
+Una vez calculado las métricas de precisión, sensibilidad y especificidad para el modelo cambiando el valor del umbral, se obtiene la Tabla 33.
+
+```{r}
+metricas_train <- rbind(metricas1, metricas2, metricas3)
+metricas_train <- as.data.frame(metricas_train)
+rownames(metricas_train) <- c("Umbral 0.5","Umbral 0.4","Umbral 0.6")
+
+kable(metricas_train,caption = "Valor de las métricas") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 33.** Métricas del modelo utilizando un umbral igual a 0.4, 0.5 y 0.6</center>
+
+<br>
+
+En la Tabla 33, observamos que:
+
+-   El mejor valor para la presión (capacidad de predección correcta) se obtuvo utilizando un umbral de 0.5.
+
+-   El mejor valor para la sensibilidad (capacidad de predecir verdaderos positivos) se obtuvo utilizando un umbral de 0.6.
+
+-   El mejor valor para la especificidad (capacidad de predecir verdaderos negativos) se obtuvo utilizando un umbral de 0.4.
+
+El interés de este trabajo es crear un modelo que sea bueno prediciendo el valor "Yes", ya que se busca predecir la probabildad de que un estudiante determinado responda correctamente la siguiente pregunta. Por lo anterior se escoge el umbral 0.6.
+
+#### 3.3.5- Análisis del modelo utilizando los datos de validación
+
+Ya definido el modelo, se realizan validaciones utilizando el conjunto de validación.
+
+```{r}
+datos_validacion = subset(datos_vl, select = -c(difficulty.level_1, difficulty.level_2, difficulty.level_3, difficulty.level_4, difficulty.level_5))
+
+pred_valid <- predict(clasificadorRL, type = 'response', newdata = datos_validacion)
+pred_valid <- ifelse(pred_valid > 0.6, 1, 0)
+pred_valid <- factor(pred_valid, levels = c("0", "1"), labels = c("No", "Yes"))
+
+matrizConfusion <- table(datos_validacion$Acertou , pred_valid)
+
+kable(matrizConfusion,caption = "Matriz de confusión") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 34.** Matriz de confusión de las predecciones obtenidas utilizando los datos de validación</center>
+
+<br>
+
+En la Tabla 34, podemos observar que se tiene un total de 248.131 predicciones correctas y 148.553, lo que equivale a una precisión de predicción de 62,55% correcta y de 37,45% incorrecta.
+
+```{r}
+#Calculo de las metricas
+precision <- sum(diag(matrizConfusion))/sum(matrizConfusion)
+sensibilidad <- matrizConfusion[2,2]/(matrizConfusion[2,2]+matrizConfusion[1,2])
+especificidad <-    matrizConfusion[1,1]/(matrizConfusion[1,1]+matrizConfusion[2,1])
+
+metricas_val <- list(precision=precision,
+                 sensibilidad=sensibilidad,
+                 especificidad=especificidad)
+metricas_val <- as.data.frame(metricas_val)
+
+kable(metricas_val,caption = "Valor de las métricas") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 35.** Métricas del modelo utilizando el conjunto de datos de validación</center>
+
+<br>
+
+Y en la Tabla 35, podemos observar los valores de las métricas de precisión, sensibilidad y especificidad utilizando los datos de validación. Estos valores son similares a los obtenidos en las métricas utilizando el conjunto de entrenamiento, con el umbral definido (0.6).
+
+### 3.4- Modelo utilizando clasificador bayesiano ingenuo
+
+El clasificador bayesiano ingenuo es "un modelo de predicción basado en la probabilidad Bayesiana" (Fervilber, 2022).
+
+#### 3.4.1- A.C.P (Análisis de las componentes principales)
+
+Se realiza un Análisis de Componentes Principales para la selección de las variables, el cual se puede ver en la Tabla 36. Para conservar el 91.42% de la variabilidad explicada en las variables, se va a trabajar con las primeras 11 componentes principales.
 
 ```{r}
 #Se realiza el calculo del ACP
@@ -594,7 +850,7 @@ p<-summary(ACP)
 pander(p[["importance"]])
 ```
 
-<center>**Tabla 26.** Análisis de Componentes Principales</center>
+<center>**Tabla 36.** Análisis de Componentes Principales</center>
 
 <br>
 
@@ -603,40 +859,137 @@ pander(p[["importance"]])
 X_tr_acp <- data.frame(ACP$x[,1:11])
 ```
 
-### 3.4- valor K óptimo
+#### 3.4.2- Creación del modelo
 
-Como criterio,,jjddjdj
-
-```{r}
-#función para encontrar el valor optimo K
-
-optimo_K <- function(k,X_t,Y_t){
-  
-  modelo_knn <- knn3(x=X_t, y = Y_t, k = k)
-  predicciones_train <- predict(modelo_knn, newdata = X_t, type = "class")
-  
-  mat_conf <- table(predicciones_train,Y_t)
-  accuracy <- sum(diag(mat_conf))/sum(mat_conf)
-  sensibilidad <- mat_conf[1,1]/(mat_conf[1,1]+mat_conf[2,1])
-  especificidad <-    mat_conf[2,2]/(mat_conf[2,2]+mat_conf[1,2])
-  resultado <- list(accuracy=accuracy,
-                    sensibilidad=sensibilidad,
-                    especificidad=especificidad)
-  return(resultado)
-}
-```
+Para la creación del modelo, se utiliza la librería "e1071", la cual trae una función "naiveBayes" que permite crear el modelo. Para la crear el modelo se utilizando los valores de entrenamiento obtenidos utilizando el análisis de las componentes principales.
 
 ```{r}
-k <- 2:30
+library(e1071)
 
-#resultados <- optimo_K(k=3, X_t=X_tr_acp,Y_t=Y_tr)
-#resultados <- t(resultados)
+#Se crea un dataframe donde se juntes las 11 columnas pincipales del acp, y la variable obj.
+datos_training <- cbind(X_tr_acp,Y_tr)
+colnames(datos_training)[12] <- "Acertou"
 
-#rownames(resultados) <- 1:nrow(resultados)
-#resultados <- as.data.frame(resultados)
-#resultados$Valor_K <- k
+set.seed(1234)
+clasificadorBayes <- naiveBayes(Acertou ~ ., data = datos_training)
 ```
 
-## Referencias
+Ya con el modelo creado y entrenado, se verifica el comportamiento de las predicciones utilizando la variable objetivo de los datos de entrenamiento con la matriz de confusión que observa en la Tabla 37.
 
--   IBM. (2022). Algoritmo de k vecinos más cercanos. 2022, noviembre 24, de ibm.com. Sitio web: https://www.ibm.com/co-es/topics/knn
+```{r}
+#Se realiza la predicción
+pred_train <- predict(clasificadorBayes, newdata = datos_training)
+
+#Se crea la matriz de confusión
+matrizConfusion <- table(datos_training$Acertou , pred_train)
+
+
+kable(matrizConfusion,caption = "Matriz de confusión") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 37.** Matriz de confusión utilizando el conjunto de datos de entrenamiento</center>
+
+<br>
+
+Con la matriz de confusión que observa en la Tabla 37, se calculan las métricas de precisión, sensibilidad y especificidad que se ven en la Tabla 38.
+
+```{r}
+#Calculo de las metricas
+precision <- sum(diag(matrizConfusion))/sum(matrizConfusion)
+sensibilidad <- matrizConfusion[2,2]/(matrizConfusion[2,2]+matrizConfusion[1,2])
+especificidad <-    matrizConfusion[1,1]/(matrizConfusion[1,1]+matrizConfusion[2,1])
+
+metricas_train2 <- list(precision=precision,
+                 sensibilidad=sensibilidad,
+                 especificidad=especificidad)
+metricas_train2 <- as.data.frame(metricas_train2)
+
+
+
+kable(metricas_train2,caption = "Valor de las métricas") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 38.** Métricas del modelo utilizando el conjunto de datos de entrenamiento</center>
+
+<br>
+
+Ahora, se verifica el comportamiento de las predicciones utilizando la variable objetivo de los datos de validación con la matriz de confusión que observa en la Tabla 39.
+
+```{r}
+ACP_vl <- predict(ACP, newdata= X_vl)
+X_vl_acp <- data.frame(ACP_vl[,1:11])
+datos_validation <- cbind(X_vl_acp, Y_vl)
+colnames(datos_validation)[12] <- "Acertou"
+
+#Se realiza la predicción
+pred_val <- predict(clasificadorBayes, newdata = datos_validation)
+
+#Se crea la matriz de confusión
+matrizConfusion <- table(datos_validation$Acertou , pred_val)
+
+
+kable(matrizConfusion,caption = "Matriz de confusión") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 39.** Matriz de confusión utilizando el conjunto de datos de validación</center>
+
+<br>
+
+Con la matriz de confusión que observa en la Tabla 39, se calculan las métricas de precisión, sensibilidad y especificidad que se ven en la Tabla 40.
+
+```{r}
+#Calculo de las metricas
+precision <- sum(diag(matrizConfusion))/sum(matrizConfusion)
+sensibilidad <- matrizConfusion[2,2]/(matrizConfusion[2,2]+matrizConfusion[1,2])
+especificidad <-    matrizConfusion[1,1]/(matrizConfusion[1,1]+matrizConfusion[2,1])
+
+metricas_val2 <- list(precision=precision,
+                 sensibilidad=sensibilidad,
+                 especificidad=especificidad)
+metricas_val2 <- as.data.frame(metricas_val2)
+
+
+
+kable(metricas_train2,caption = "Valor de las métricas") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 40.** Métricas del modelo utilizando el conjunto de datos de validación</center>
+
+<br>
+
+Con los valores de las métricas obtenidos en las Tablas 38 y 40, podemos observar que para ambos casos los valores son bastante similares.
+
+### 3.5- Análisis de los modelos creados
+
+En la Tabla 41, se observa los valores de las métricas de precisión, sensibilidad y especificidad obtenidos al analizar el comportamiento del modelo de regresión logística con los datos de entrenamiento y validación, y el comportamiento del modelo clasificador bayesiano ingenuo con los datos de entrenamiento y validación.
+
+```{r}
+metrics <- cbind(metricas3,metricas_val,metricas_train2,metricas_val2)
+metrics <- as.data.frame(metrics)
+rownames(metrics) <- c("Modelo RL Train","Modelo RL Test","Modelo CBI Train", "Modelo CBI Test")
+
+kable(metrics,caption = "Valor de las métricas") %>% 
+  kable_styling(full_width = F,position = "center") %>% 
+  kable_minimal()
+```
+
+<center>**Tabla 41.** Métricas del modelos creados</center>
+
+<br>
+
+Con lo reflejado en la Tabla 41, se decide utilizar el modelo clasificador bayesiano ingenuo creado, ya que posee mejores resultados en cada una de las métricas tanto en el entrenamiento, como en la validación.
+
+### 3.6- Predicción de acierto en la pregunta 101 de todos los usuarios
+
+## 4- Referencias
+
+-   Amat, J.. (2016). Regresión logística simple y múltiple. 2022, noviembre 30, de Rpubs. Sitio web: https://rpubs.com/Joaquin_AR/229736
+-   Fervilber. (2022). Capítulo 5 Naive Bayes- clasificación bayesiano ingenuo. 2022, noviembre 30, de Aprendizaje-supervisado-en-R. Sitio web: https://fervilber.github.io/Aprendizaje-supervisado-en-R/ingenuo.html
