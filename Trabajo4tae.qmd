@@ -1114,6 +1114,7 @@ La probabilidad del modelo de predecir correctamente el resultado de acierto a l
 Cabe destacar que cada predicción de acierto en cada fila de la Tabla 42, es la predicción de acierto empezando con el usuario 1 hasta el usuario 19.834.
 
 ```{r}
+#Se realiza la prediccion con el modelo clasificador bayesiano ingenuo
 pred <- predict(clasificadorBayes, newdata = datos_resp_acp)
 pred <- as.data.frame(pred)
 colnames(pred) <- c("Prediccion")
