@@ -1111,6 +1111,8 @@ Una vez realizada las transformación respectiva, se procede a realizar la predi
 
 La probabilidad del modelo de predecir correctamente el resultado de acierto a la pregunta 101 "Yes", es de 70,36%, como se observa en la Tabla 41.
 
+Cabe destacar que cada predicción de acierto en cada fila de la Tabla 42, es la predicción de acierto empezando con el usuario 1 hasta el usuario 19.834.
+
 ```{r}
 pred <- predict(clasificadorBayes, newdata = datos_resp_acp)
 pred <- as.data.frame(pred)
